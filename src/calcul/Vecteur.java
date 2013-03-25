@@ -66,9 +66,10 @@ public class Vecteur {
 			
 		}
 	}
-	
+	/* Pas de pull si il existe des erreurs dans votre code svp.
 	public Vecteur opperation(Vecteur vect1, Vecteur vect2, int oppType){
 		Vecteur result = new Vecteur();
 		
-	}
+	} 
+	*/
 }
