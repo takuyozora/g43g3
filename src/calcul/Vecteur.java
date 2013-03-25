@@ -68,7 +68,7 @@ public class Vecteur {
 	}
 	
 	public Vecteur opperation(Vecteur vect1, Vecteur vect2, int oppType){
-		Vecteur result = Vecteur();
+		Vecteur result = new Vecteur();
 		
 	}
 }
