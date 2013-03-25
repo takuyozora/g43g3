@@ -23,4 +23,5 @@ public class Vecteur {
 		norme = Math.sqrt(x*x+y*y+z*z) ;
 		return norme ;
 	}
+	
 }
