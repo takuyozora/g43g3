@@ -69,6 +69,7 @@ public class Vecteur {
 			
 		}
 	}
+<<<<<<< HEAD
 	
 	public static Vecteur operation(Vecteur vect1, Vecteur vect2, int opeType){
 		Vecteur result = new Vecteur();
@@ -96,4 +97,12 @@ public class Vecteur {
 	public void operation(Vecteur vect2, int opeType){
 		this = Vecteur.operation(this,vect2,opeType);
 	}
+=======
+	/* Pas de pull si il existe des erreurs dans votre code svp.
+	public Vecteur opperation(Vecteur vect1, Vecteur vect2, int oppType){
+		Vecteur result = new Vecteur();
+		
+	} 
+	*/
+>>>>>>> 02dad9061059e9453f337edecb0d5d92c034d594
 }
