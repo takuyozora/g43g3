@@ -25,7 +25,7 @@ public class Vecteur {
 	public double h;
 	
 	
-	public double norme ;
+	// (pas utile) public double norme ;
 	
 	public Vecteur(){
 		this.x = 0 ;
@@ -41,10 +41,10 @@ public class Vecteur {
 		this.updateAll(TYPE_CARTESIEN);
 	}
 	
-	public double norme(double x , double y , double z){
+	/* (pas utile) public double norme(double x , double y , double z){
 		norme = Math.sqrt(x*x+y*y+z*z) ;
 		return norme ;
-	}
+	}*/
 	
 	private void updateCartesien(int fromType){
 		if (fromType == TYPE_CYLINDRIQUE){
