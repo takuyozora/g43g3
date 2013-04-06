@@ -1,14 +1,16 @@
 package calcul;
 
+import java.lang.Math;
+
 public class Vecteur {
 	
 	static final int TYPE_CARTESIEN = 10;
 	static final int TYPE_SPHERIQUE = 11;
 	static final int TYPE_CYLINDRIQUE = 12;
 	
-	static final int OPE_PLUS = 20;
-	static final int OPE_MOINS = 21;
-	static final int OPE_PRODUIT = 22;
+	public static final int OPE_PLUS = 20;
+	public static final int OPE_MOINS = 21;
+	public static final int OPE_PRODUIT = 22;
 	
 	public double x ;
 	public double y ;
@@ -29,16 +31,14 @@ public class Vecteur {
 		this.x = 0 ;
 		this.y = 0 ;
 		this.z = 0 ;
-		this.updateCylindrique(TYPE_CARTESIEN);
-		this.updateSpherique(TYPE_CARTESIEN);
+		this.updateAll(TYPE_CARTESIEN);
 	}
 	
 	public Vecteur(double x , double y , double z){
 		this.x = x ;
 		this.y = y ;
 		this.z = z ;
-		this.updateCylindrique(TYPE_CARTESIEN);
-		this.updateSpherique(TYPE_CARTESIEN);
+		this.updateAll(TYPE_CARTESIEN);
 	}
 	
 	public double norme(double x , double y , double z){
@@ -48,17 +48,28 @@ public class Vecteur {
 	
 	private void updateCartesien(int fromType){
 		if (fromType == TYPE_CYLINDRIQUE){
-			
-		}else if(fromType == TYPE_CYLINDRIQUE){
-			
+			this.x = this.rayonr * Math.cos(this.thetar);
+			this.y = this.rayonr * Math.sin(this.thetar);
+			this.z = this.h;
+		}else if(fromType == TYPE_SPHERIQUE){
+			this.x = this.rayons * Math.sin(this.thetas) * Math.cos(this.phi);
+			this.y = this.rayons * Math.sin(this.thetas) * Math.sin(this.phi);
+			this.z = this.rayons * Math.cos(this.thetas);
 		}
 	}
 	
 	private void updateSpherique(int fromType){
 		if (fromType == TYPE_CYLINDRIQUE){
-			
+			this.rayons = Math.sqrt(this.rayonr*this.rayonr + this.h*this.h);
+			this.thetas = Math.acos(this.h / this.rayons);
+			this.phi = this.thetar;
 		}else if(fromType == TYPE_CARTESIEN){
-			
+			this.rayons = Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
+			this.thetas = Math.acos(this.z / this.rayons);
+			this.phi = Math.acos(this.x / Math.sqrt(this.x*this.x + this.y*this.y));
+			if ( Math.sin(this.y / Math.sqrt(this.x*this.x + this.y*this.y)) < 0 ){
+				this.phi = 2 * Math.PI - this.phi;
+			}
 		}
 	}
 	
@@ -69,7 +80,12 @@ public class Vecteur {
 			
 		}
 	}
-<<<<<<< HEAD
+	
+	private void updateAll(int fromType){
+		this.updateCartesien(fromType);
+		this.updateCylindrique(fromType);
+		this.updateSpherique(fromType);
+	}
 	
 	public static Vecteur operation(Vecteur vect1, Vecteur vect2, int opeType){
 		Vecteur result = new Vecteur();
@@ -77,32 +93,31 @@ public class Vecteur {
 			result.x = vect1.x + vect2.x;
 			result.y = vect1.y + vect2.y;
 			result.z = vect1.z + vect2.z;
-			return result;
 		}
 		else if (opeType == OPE_MOINS){
 			result.x = vect1.x - vect2.x;
 			result.y = vect1.y - vect2.y;
 			result.z = vect1.z - vect2.z;
-			return result;
 		}
 		else if (opeType == OPE_PRODUIT){
 			result.x = vect1.y * vect2.z - vect1.z * vect2.y;
 			result.y = vect1.z * vect2.x - vect1.x * vect2.z;
 			result.z = vect1.x * vect2.y - vect1.y * vect2.x;
-			return result;
 		}
-		throw new IllegalArgumentException();
+		else{
+			throw new IllegalArgumentException();
+		}
+		result.updateAll(TYPE_CARTESIEN);
+		return result;
+		
 	}
 	
 	public void operation(Vecteur vect2, int opeType){
-		this = Vecteur.operation(this,vect2,opeType);
+		Vecteur result = Vecteur.operation(this,vect2,opeType);
+		this.x = result.x;
+		this.y = result.y;
+		this.z = result.z;
+		this.updateAll(TYPE_CARTESIEN);
 	}
-=======
-	/* Pas de pull si il existe des erreurs dans votre code svp.
-	public Vecteur opperation(Vecteur vect1, Vecteur vect2, int oppType){
-		Vecteur result = new Vecteur();
-		
-	} 
-	*/
->>>>>>> 02dad9061059e9453f337edecb0d5d92c034d594
+	
 }
