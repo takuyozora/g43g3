@@ -2,20 +2,24 @@ package calcul;
 
 public class Point {
 	
-	public double coordx ;
-	public double coordy ;
-	public double coordz ;
+	public double x ;
+	public double y ;
+	public double z ;
 	
 	public Point (){
-		coordx = 0 ;
-		coordy = 0 ;
-		coordz = 0 ;
+		this.x = 0 ;
+		this.y = 0 ;
+		this.z = 0 ;
 	}
 	
 	public Point (double x , double y , double z){
-		coordx = x ;
-		coordy = y ;
-		coordz = z ;
+		this.x = x ;
+		this.y = y ;
+		this.z = z ;
+	}
+	
+	public Vecteur getVecteur(){
+		return new Vecteur(this.x,this.y,this.z);
 	}
 
 }

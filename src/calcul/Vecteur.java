@@ -119,6 +119,14 @@ public class Vecteur {
 		
 	}
 	
+	public static boolean comparer(Vecteur vect1, Vecteur vect2){
+		if (vect1.x == vect2.x && vect1.y == vect2.y && vect1.z == vect2.z){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	public void operation(Vecteur vect2, int opeType){
 		Vecteur result = Vecteur.operation(this,vect2,opeType);
 		this.x = result.x;
