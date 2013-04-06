@@ -75,9 +75,16 @@ public class Vecteur {
 	
 	private void updateCylindrique(int fromType){
 		if (fromType == TYPE_SPHERIQUE){
-			
+			this.rayonr = this.rayons * Math.sin(this.thetas);
+			this.thetar = this.phi;
+			this.h = this.rayons * Math.cos(this.thetas);
 		}else if(fromType == TYPE_CARTESIEN){
-			
+			this.rayonr = Math.sqrt(this.x*this.x + this.y*this.y);
+			this.thetar = Math.acos(this.x/this.rayonr);
+			if(Math.sin(this.y/this.rayonr) < 0){
+				this.thetar = 2 * Math.PI - this.thetar;
+			}
+			this.h = this.z;
 		}
 	}
 	
