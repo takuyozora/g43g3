@@ -6,7 +6,7 @@ public class Balle extends PointMateriel {
 	 */
 	
 	private static double MASSE_OFFCIEL = 0.024;
-	private static double GRANULARITE_TEMPS = 0.002;
+	private static double GRANULARITE_TEMPS = 0.005;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
 	
 	public Balle(){
@@ -60,11 +60,9 @@ public class Balle extends PointMateriel {
 		System.out.println("Hello World !");
 		
 		calcul.Vecteur vinit = new calcul.Vecteur();
-		// Temporaire, modifier avec les accecsseurs !
-		vinit.phi = 2.6;
-		vinit.thetas = 0.5;
-		vinit.rayons = 42;
-		vinit.tmp_updateAll(Vecteur.TYPE_SPHERIQUE); // À modifier !!
+		vinit.setPhi(2.6);
+		vinit.setThetas(0.5);
+		vinit.setRayons(30);
 		calcul.Balle balle = new calcul.Balle(new Vecteur(3,1,1), vinit);
 		
 
