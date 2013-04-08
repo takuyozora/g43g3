@@ -20,4 +20,7 @@ public class MenuBar extends JPanel {
 		this.setBackground(Color.BLACK);
 	}
 	
+	
+	
 }
+	
