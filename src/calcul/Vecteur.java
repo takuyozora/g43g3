@@ -195,8 +195,4 @@ public class Vecteur {
 		this.updateAll(TYPE_CYLINDRIQUE);
 	}
 	
-	public void tmp_updateAll(int fromType){
-		this.updateAll(fromType);
-	}
-	
 }
