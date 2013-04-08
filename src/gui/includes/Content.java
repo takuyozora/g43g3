@@ -12,15 +12,13 @@ import javax.swing.JPanel;
 
 public class Content extends JPanel {
 	
-	
-	
 	public void paintComponent(Graphics g){                        
-	    // j'ai créer les textes 
+	    // J'ai crée les textes 
 		g.drawString("New : créer une nouvelle simulation ", 150, 100);  
 	    g.drawString("Favoris : Utiliser les données déjà enregistrées ", 150, 220);
 	    g.drawString("Settings : aller dans les paramètres", 150, 340);
 	    this.setBackground(Color.white);
-	    // j'ai créer les images 
+	    // J'ai crée les images 
 	    try {
 	        Image img = ImageIO.read(new File("./src/gui/res/add.png"));
 	        g.drawImage(img, 110, 82, this);
@@ -33,8 +31,8 @@ public class Content extends JPanel {
 	      } catch (IOException e) {
 	        e.printStackTrace();
 	      }                
-	      }                
-	  }               
+	}                
+}               
 
 	
 
