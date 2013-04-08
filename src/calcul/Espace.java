@@ -25,18 +25,22 @@ public final class Espace {
 
 	public static int impact(Vecteur position){
 		if(position.x < 0){
+			position.setX(0);
 			return IMPACT_OUEST ;
 		}
 		
 		else if(position.y < 0){
+			position.setY(0);
 			return IMPACT_SUD;
 		}
 		
 		else if (position.y > PROFONDEUR){
+			position.setY(PROFONDEUR);
 			return IMPACT_NORD;
 		}
 		
 		else if (position.x > LARGEUR){
+			position.setX(LARGEUR);
 			return IMPACT_EST;
 		}
 		else if(position.z < 0){

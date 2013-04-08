@@ -37,13 +37,18 @@ public class Balle extends PointMateriel {
 		/*
 		 * Gère les rebonds
 		 */
-		if( impact == Espace.IMPACT_NORD || impact == Espace.IMPACT_SUD){
+		if( impact == Espace.IMPACT_NORD ){
 			this.vitesse.setY(-this.vitesse.y);
-		}else if( impact == Espace.IMPACT_EST || impact == Espace.IMPACT_OUEST){
+		}else if (impact == Espace.IMPACT_SUD){
+			this.vitesse.setY(-this.vitesse.y);
+		}else if( impact == Espace.IMPACT_EST){
+			this.vitesse.setX(-this.vitesse.x);
+		}else if( impact == Espace.IMPACT_OUEST){
 			this.vitesse.setX(-this.vitesse.x);
 		}else if( impact == Espace.IMPACT_PLAFOND){
 			throw new UnsupportedOperationException("Pas encore prévus");
 		}
+		this.vitesse.pscalaire(COEFFICIENT_ABSORBTION);
 		// ici on amorti la balle !
 		/*
 		this.vitesse.setX(this.vitesse.x * 0.8);
@@ -58,7 +63,7 @@ public class Balle extends PointMateriel {
 		// Temporaire, modifier avec les accecsseurs !
 		vinit.phi = 2.6;
 		vinit.thetas = 0.5;
-		vinit.rayons = 22;
+		vinit.rayons = 42;
 		vinit.tmp_updateAll(Vecteur.TYPE_SPHERIQUE); // À modifier !!
 		calcul.Balle balle = new calcul.Balle(new Vecteur(3,1,1), vinit);
 		
