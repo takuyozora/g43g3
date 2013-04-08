@@ -18,18 +18,22 @@ public class Balle extends PointMateriel {
 		this.masse = MASSE_OFFCIEL;
 	}
 	
-	public Balle(Vecteur vinit){
-		this.vitesse = vinit;
-		this.masse = MASSE_OFFCIEL;
+	public Vecteur lancer(){
+		Vecteur pimpact = new Vecteur(0,0,0);
+		int impact = 0; 
+		while(impact != Espace.IMPACT_SOL){
+			if(impact != Espace.PAS_IMPACT){
+				this.rebond(impact);
+			}
+			this.subirForce(Espace.GRAVITE, GRANULARITE_TEMPS);
+			impact = Espace.impact(this.position);
+		}
+		return pimpact;
 	}
 	
-	public Vecteur lancer(){
-		Vecteur pimpacte = new Vecteur(0,0,0);
-		int impacte = 0; 
-		while(impacte != Espace.IMPACTE_SOL){
-			this.subirForce(Espace.GRAVITE, GRANULARITE_TEMPS);
-			impacte = Espace.impacte(this.position);
-		}
-		return pimpacte;
+	public void rebond(int impact){
+		/*
+		 * Gère les rebonds
+		 */
 	}
 }
