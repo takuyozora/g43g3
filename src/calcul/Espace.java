@@ -15,11 +15,13 @@ public static class Espace {
 	
 	public static Vecteur GRAVITE = new Vecteur(0,0,9.81);
 	
+/* KARIM : J'ai commenté pour pouvoir compiler.
+	
 	public static double LARGEUR = ***;
 	public static double PROFONDEUR = ***;
 	public static double HAUTEUR_HAUTE = ***;
 	public static double HAUTEUR_BASSE = ***;
-	
+*/	
 	public static int impacte(Vecteur position){
 		if(position.x < 0){
 			
