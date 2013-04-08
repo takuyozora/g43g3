@@ -29,9 +29,8 @@ public class MenuBar extends JPanel {
 	JButton settingsButton = new JButton("Paramètres", settingsIcon);
 
 	public MenuBar() {
-		
-		
 		this.setLayout(new FlowLayout());
+		
 		this.add(addButton);
 		this.add(favsButton);
 		this.add(settingsButton);
