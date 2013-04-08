@@ -12,16 +12,16 @@ public static class Espace {
 	public static int IMPACT_SUD = 21;
 	public static int IMPACT_EST = 22;
 	public static int IMPACT_OUEST = 23;
-	public static int PAS_IMPACT = 30
+	public static int PAS_IMPACT = 30;
 	
 	public static Vecteur GRAVITE = new Vecteur(0,0,-9.81);
 	
 
 	
-	public static double LARGEUR = ***;
-	public static double PROFONDEUR = ***;
-	public static double HAUTEUR_HAUTE = ***;
-	public static double HAUTEUR_BASSE = ***;
+	public static double LARGEUR = 6.40;
+	public static double PROFONDEUR = 9.75;
+	public static double HAUTEUR_HAUTE =  4.57;
+	public static double HAUTEUR_BASSE = 2.13;
 
 	public static int impact(Vecteur position){
 		if(position.x < 0){
