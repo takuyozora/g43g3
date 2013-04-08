@@ -1,18 +1,16 @@
+import calcul.*;
+
 public class Main {
 	
 	public static void main(String[] args) {
 		System.out.println("Hello World !");
 		
-		calcul.Vecteur vect1 = new calcul.Vecteur(1,2,3);
-		calcul.Vecteur vect2 = new calcul.Vecteur(1,2,3);
-		
-		calcul.Vecteur vect3 = calcul.Vecteur.operation(vect1,vect2,calcul.Vecteur.OPE_PLUS);
-		
-		System.out.println(vect3);
-		
-		vect3.operation(vect1,calcul.Vecteur.OPE_PLUS);
-		
-		System.out.println(vect3);
+		calcul.Vecteur vinit = new calcul.Vecteur();
+		vinit.phi = 0.3;
+		vinit.thetas = 1;
+		vinit.rayons = 20;
+		vinit.operation(calcul.Vecteur(), calcul.Vecteur.OPE_MOINS);
+		calcul.Balle balle = new calcul.Balle(Vecteur(3,1,1), vinit);
 	}
 	
 }

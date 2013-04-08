@@ -25,7 +25,11 @@ public class PointMateriel{
 		 * Cette méthode utilise le PFD pour modifier le vecteur vitesse du point en fonction de la 
 		 * froce subit et du temps donné
 		 */
-		Vecteur acceleration = Vecteur.pscalaire(force, (1/this.masse));
+		Vecteur acceleration = Vecteur.pscalaire(force, (this.masse/this.masse));
 		this.vitesse.operation(Vecteur.pscalaire(acceleration,t), Vecteur.OPE_PLUS);
+	}
+	
+	public void continuerMouvement(double t){
+		this.position.operation(Vecteur.pscalaire(this.vitesse, t), Vecteur.OPE_PLUS);
 	}
 }

@@ -1,6 +1,6 @@
 package calcul;
 
-public static class Espace {
+public final class Espace {
 	/*
 	 * Cette classe est là pour définir l'espace dans lequel la balle peut évoluer.
 	 * Son but est de prévenir à chaque itération si la balle a touchée un des murs.
@@ -25,7 +25,7 @@ public static class Espace {
 
 	public static int impact(Vecteur position){
 		if(position.x < 0){
-			return IMPACT_EST ;
+			return IMPACT_OUEST ;
 		}
 		
 		else if(position.y < 0){
@@ -37,7 +37,13 @@ public static class Espace {
 		}
 		
 		else if (position.x > LARGEUR){
-			return IMPACT_OUEST;
+			return IMPACT_EST;
+		}
+		else if(position.z < 0){
+			return IMPACT_SOL;
+		}
+		else{
+			return PAS_IMPACT;
 		}
 	}
 

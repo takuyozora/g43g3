@@ -158,5 +158,8 @@ public class Vecteur {
 		this.updateAll(TYPE_CARTESIEN);
 	}
 	
+	public void tmp_updateAll(int fromType){
+		this.updateAll(fromType);
+	}
 	
 }
