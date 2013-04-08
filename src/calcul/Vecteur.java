@@ -135,6 +135,13 @@ public class Vecteur {
 		return result;
 	}
 	
+	public void pscalaire(double scalaire){
+		this.x *= scalaire;
+		this.y *= scalaire;
+		this.z *= scalaire;
+		this.updateAll(TYPE_CARTESIEN);
+	}
+	
 	public void operation(Vecteur vect2, int opeType){
 		Vecteur result = Vecteur.operation(this,vect2,opeType);
 		this.x = result.x;

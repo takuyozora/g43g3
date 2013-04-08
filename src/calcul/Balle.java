@@ -6,7 +6,8 @@ public class Balle extends PointMateriel {
 	 */
 	
 	private static double MASSE_OFFCIEL = 0.024;
-	private static double GRANULARITE_TEMPS = 0.01;
+	private static double GRANULARITE_TEMPS = 0.002;
+	private static double COEFFICIENT_ABSORBTION = 0.45;
 	
 	public Balle(){
 		this.masse = MASSE_OFFCIEL;
@@ -44,9 +45,10 @@ public class Balle extends PointMateriel {
 			throw new UnsupportedOperationException("Pas encore prévus");
 		}
 		// ici on amorti la balle !
-		this.vitesse.rayons = this.vitesse.rayons * 0.65;
-		// À MODIFIER AVEC setPhi !! 
-		this.vitesse.tmp_updateAll(Vecteur.TYPE_SPHERIQUE);
+		/*
+		this.vitesse.setX(this.vitesse.x * 0.8);
+		this.vitesse.setY(this.vitesse.y * 0.8);//(1-COEFFICIENT_ABSORBTION);
+		*/
 	}
 	
 	public static void main(String[] args) {
@@ -54,14 +56,18 @@ public class Balle extends PointMateriel {
 		
 		calcul.Vecteur vinit = new calcul.Vecteur();
 		// Temporaire, modifier avec les accecsseurs !
-		vinit.phi = 1.6;
-		vinit.thetas = 0.0;
-		vinit.rayons = 40;
+		vinit.phi = 2.6;
+		vinit.thetas = 0.5;
+		vinit.rayons = 22;
 		vinit.tmp_updateAll(Vecteur.TYPE_SPHERIQUE); // À modifier !!
 		calcul.Balle balle = new calcul.Balle(new Vecteur(3,1,1), vinit);
 		
+
+	    long begin = System.currentTimeMillis();
 		Vecteur position = balle.lancer();
+		long end = System.currentTimeMillis();
+		float time = ((float) (end-begin)) / 1000f;
 		
-		System.out.println("End normaly");
+		System.out.println("End normaly, erreur sur z :"+(position.z*100)+" temps d'execution :"+time);
 	}
 }
