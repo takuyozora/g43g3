@@ -165,6 +165,36 @@ public class Vecteur {
 		this.updateAll(TYPE_CARTESIEN);
 	}
 	
+	public void setPhi(double phi){
+		this.phi = phi;
+		this.updateAll(TYPE_SPHERIQUE);
+	}
+	
+	public void setThetas (double thetas){
+		this.thetas = thetas;
+		this.updateAll(TYPE_SPHERIQUE);
+	}
+	
+	public void setRayons (double rayons){
+		this.rayons = rayons;
+		this.updateAll(TYPE_SPHERIQUE);
+	}
+	
+	public void setThetar(double thetar){
+		this.thetar = thetar;
+		this.updateAll(TYPE_CYLINDRIQUE);
+	}
+	
+	public void setH (double h){
+		this.h = h;
+		this.updateAll(TYPE_CYLINDRIQUE);
+	}
+	
+	public void setRayonr(double rayonr){
+		this.rayonr = rayonr;
+		this.updateAll(TYPE_CYLINDRIQUE);
+	}
+	
 	public void tmp_updateAll(int fromType){
 		this.updateAll(fromType);
 	}
