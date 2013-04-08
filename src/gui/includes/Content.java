@@ -15,7 +15,8 @@ public class Content extends JPanel {
 	
 	
 	public void paintComponent(Graphics g){                        
-	    // j'ai créer les textes 
+	    // j'ai créer les textes, ce qui est police etc .. jusqu'à la fin
+		g.drawString("Bienvenu dans l'application SquashPro ", 230, 30);  
 		g.drawString("New : créer une nouvelle simulation ", 150, 100);  
 	    g.drawString("Favoris : Utiliser les données déjà enregistrées ", 150, 220);
 	    g.drawString("Settings : aller dans les paramètres", 150, 340);
@@ -23,10 +24,10 @@ public class Content extends JPanel {
 	    // j'ai créer les images 
 	    try {
 	        Image img = ImageIO.read(new File("./src/gui/res/add.png"));
-	        g.drawImage(img, 110, 82, this);
+	        g.drawImage(img, 110, 80, this);
 	     
 	        Image img2 = ImageIO.read(new File("./src/gui/res/favs.png"));
-	        g.drawImage(img2, 110, 196, this);
+	        g.drawImage(img2, 110, 200, this);
 	        
 	        Image img3 = ImageIO.read(new File("./src/gui/res/settings.png"));
 	        g.drawImage(img3, 110, 320, this);
