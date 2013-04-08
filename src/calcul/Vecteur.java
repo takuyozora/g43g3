@@ -143,4 +143,6 @@ public class Vecteur {
 		this.updateAll(TYPE_CARTESIEN);
 	}
 	
+	
+	
 }

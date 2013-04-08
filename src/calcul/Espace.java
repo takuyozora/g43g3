@@ -22,7 +22,7 @@ public static class Espace {
 	public static double PROFONDEUR = ***;
 	public static double HAUTEUR_HAUTE = ***;
 	public static double HAUTEUR_BASSE = ***;
-*/	
+
 	public static int impact(Vecteur position){
 		if(position.x < 0){
 			return IMPACT_EST ;

@@ -19,7 +19,6 @@ public class Balle extends PointMateriel {
 	}
 	
 	public Vecteur lancer(){
-		Vecteur pimpact = new Vecteur(0,0,0);
 		int impact = 0; 
 		while(impact != Espace.IMPACT_SOL){
 			if(impact != Espace.PAS_IMPACT){
@@ -28,12 +27,19 @@ public class Balle extends PointMateriel {
 			this.subirForce(Espace.GRAVITE, GRANULARITE_TEMPS);
 			impact = Espace.impact(this.position);
 		}
-		return pimpact;
+		return this.position;
 	}
 	
 	public void rebond(int impact){
 		/*
 		 * Gère les rebonds
 		 */
+		if( impact == Espace.IMPACT_NORD || impact == Espace.IMPACT_SUD){
+			this.vitesse.setY(-this.vitesse.y);
+		}else if( impact == Espace.IMPACT_EST || impact == Espace.IMPACT_OUEST){
+			this.vitesse.setX(-this.vitesse.x);
+		}else if( impact == Espace.IMPACT_PLAFOND){
+			throw new UnsupportedOperationException("Pas encore prévus");
+		}
 	}
 }
