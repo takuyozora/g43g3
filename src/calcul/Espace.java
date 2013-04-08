@@ -43,9 +43,16 @@ public final class Espace {
 			position.setX(LARGEUR);
 			return IMPACT_EST;
 		}
+		
 		else if(position.z < 0){
 			return IMPACT_SOL;
 		}
+		
+		else if(position.z > (HAUTEUR_BASSE + ((HAUTEUR_HAUTE-HAUTEUR_BASSE)/PROFONDEUR)*position.y)){
+			position.setZ(HAUTEUR_BASSE + ((HAUTEUR_HAUTE-HAUTEUR_BASSE)/PROFONDEUR)*position.y);
+			return IMPACT_PLAFOND;
+		}
+		
 		else{
 			return PAS_IMPACT;
 		}
