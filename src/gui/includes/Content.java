@@ -12,16 +12,18 @@ import javax.swing.JPanel;
 
 public class Content extends JPanel {
 	
-	
-	
 	public void paintComponent(Graphics g){                        
+<<<<<<< HEAD
 	    // j'ai créer les textes, ce qui est police etc .. jusqu'à la fin
 		g.drawString("Bienvenu dans l'application SquashPro ", 230, 30);  
+=======
+	    // J'ai crée les textes 
+>>>>>>> ead1ab22d40484493052cc9095a023656170d08a
 		g.drawString("New : créer une nouvelle simulation ", 150, 100);  
 	    g.drawString("Favoris : Utiliser les données déjà enregistrées ", 150, 220);
 	    g.drawString("Settings : aller dans les paramètres", 150, 340);
 	    this.setBackground(Color.white);
-	    // j'ai créer les images 
+	    // J'ai crée les images 
 	    try {
 	        Image img = ImageIO.read(new File("./src/gui/res/add.png"));
 	        g.drawImage(img, 110, 80, this);
@@ -34,8 +36,8 @@ public class Content extends JPanel {
 	      } catch (IOException e) {
 	        e.printStackTrace();
 	      }                
-	      }                
-	  }               
+	}                
+}               
 
 	
 

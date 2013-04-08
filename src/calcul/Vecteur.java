@@ -25,7 +25,7 @@ public class Vecteur {
 	public double h;
 	
 	
-	// (pas utile) public double norme ;
+	// (inutile) public double norme ;
 	
 	public Vecteur(){
 		this.x = 0 ;
@@ -41,7 +41,7 @@ public class Vecteur {
 		this.updateAll(TYPE_CARTESIEN);
 	}
 	
-	/* (pas utile) public double norme(double x , double y , double z){
+	/* (inutile) public double norme(double x , double y , double z){
 		norme = Math.sqrt(x*x+y*y+z*z) ;
 		return norme ;
 	}*/
