@@ -143,6 +143,20 @@ public class Vecteur {
 		this.updateAll(TYPE_CARTESIEN);
 	}
 	
+	public void setX(double x){
+		this.x = x;
+		this.updateAll(TYPE_CARTESIEN);
+	}
+	
+	public void setY(double y){
+		this.y = y;
+		this.updateAll(TYPE_CARTESIEN);
+	}
+	
+	public void setZ(double z){
+		this.z = z;
+		this.updateAll(TYPE_CARTESIEN);
+	}
 	
 	
 }
