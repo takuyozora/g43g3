@@ -127,6 +127,14 @@ public class Vecteur {
 		}
 	}
 	
+	public static Vecteur pscalaire(Vecteur vect, double scalaire){
+		/*
+		 * Retourne v = k * u
+		 */
+		Vecteur result = new Vecteur(vect.x*scalaire,vect.y*scalaire,vect.z*scalaire);
+		return result;
+	}
+	
 	public void operation(Vecteur vect2, int opeType){
 		Vecteur result = Vecteur.operation(this,vect2,opeType);
 		this.x = result.x;
