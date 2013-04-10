@@ -6,8 +6,10 @@ public class Balle extends PointMateriel {
 	 */
 	
 	private static double MASSE_OFFCIEL = 0.024;
-	private static double GRANULARITE_TEMPS = 0.005;
+	//private static double GRANULARITE_TEMPS = 0.005;
+	private static double GRANULARITE_TEMPS = 0.05;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
+	private static double COEFFICINT_FROTEMENT = 0.45;
 	
 	public Balle(){
 		this.masse = MASSE_OFFCIEL;
@@ -20,15 +22,20 @@ public class Balle extends PointMateriel {
 	}
 	
 	public Vecteur lancer(){
-		int impact = 0; 
+		double time = 0;
+		int impact = Espace.PAS_IMPACT; 
 		while(impact != Espace.IMPACT_SOL){
+			//System.out.println(time+","+this.position.x+","+this.position.y+","+this.position.z);
+			System.out.println(this.position.x+","+this.position.y);
 			if(impact != Espace.PAS_IMPACT){
 				this.rebond(impact);
-				System.out.println("Impacte : "+impact);
+				//System.out.println("----"+impact);
 			}
 			this.subirForce(Espace.GRAVITE, GRANULARITE_TEMPS);
+			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICINT_FROTEMENT*this.vitesse.rayons), GRANULARITE_TEMPS);
 			this.continuerMouvement(GRANULARITE_TEMPS);
 			impact = Espace.impact(this.position);
+			//time += GRANULARITE_TEMPS;
 		}
 		return this.position;
 	}
@@ -48,28 +55,23 @@ public class Balle extends PointMateriel {
 		}else if( impact == Espace.IMPACT_PLAFOND){
 			throw new UnsupportedOperationException("Pas encore prévus");
 		}
-		this.vitesse.pscalaire(COEFFICIENT_ABSORBTION);
-		// ici on amorti la balle !
-		/*
-		this.vitesse.setX(this.vitesse.x * 0.8);
-		this.vitesse.setY(this.vitesse.y * 0.8);//(1-COEFFICIENT_ABSORBTION);
-		*/
+		this.vitesse.pscalaire(1-COEFFICIENT_ABSORBTION); // Ici on ammorti la balle
 	}
 	
 	public static void main(String[] args) {
 		System.out.println("Hello World !");
 		
 		calcul.Vecteur vinit = new calcul.Vecteur();
-		vinit.setPhi(2.6);
-		vinit.setThetas(0.5);
-		vinit.setRayons(30);
+		vinit.setPhi(2.8);
+		vinit.setThetas(1.3);
+		vinit.setRayons(35);
 		calcul.Balle balle = new calcul.Balle(new Vecteur(3,1,1), vinit);
 		
 
 	    long begin = System.currentTimeMillis();
 		Vecteur position = balle.lancer();
 		long end = System.currentTimeMillis();
-		float time = ((float) (end-begin)) / 1000f;
+		float time = ((float) (end-begin));
 		
 		System.out.println("End normaly, erreur sur z :"+(position.z*100)+" temps d'execution :"+time);
 	}
