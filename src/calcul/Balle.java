@@ -5,20 +5,20 @@ public class Balle extends PointMateriel {
 	 * Classe représentant la balle
 	 */
 	
-	private static double MASSE_OFFCIEL = 0.024;
+	private static double MASSE_OFFICIEL = 0.024;
 	//private static double GRANULARITE_TEMPS = 0.005;
 	private static double GRANULARITE_TEMPS = 0.05;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
-	private static double COEFFICINT_FROTEMENT = 0.45;
+	private static double COEFFICIENT_FROTTEMENT = 0.45;
 	
 	public Balle(){
-		this.masse = MASSE_OFFCIEL;
+		this.masse = MASSE_OFFICIEL;
 	}
 	
 	public Balle(Vecteur pinit, Vecteur vinit){
 		this.vitesse = vinit;
 		this.position = pinit;
-		this.masse = MASSE_OFFCIEL;
+		this.masse = MASSE_OFFICIEL;
 	}
 	
 	public Vecteur lancer(){
@@ -32,7 +32,7 @@ public class Balle extends PointMateriel {
 				//System.out.println("----"+impact);
 			}
 			this.subirForce(Espace.GRAVITE, GRANULARITE_TEMPS);
-			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICINT_FROTEMENT*this.vitesse.rayons), GRANULARITE_TEMPS);
+			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT*this.vitesse.rayons), GRANULARITE_TEMPS);
 			this.continuerMouvement(GRANULARITE_TEMPS);
 			impact = Espace.impact(this.position);
 			//time += GRANULARITE_TEMPS;
