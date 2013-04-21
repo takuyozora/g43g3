@@ -9,7 +9,7 @@ public class Balle extends PointMateriel {
 	//private static double GRANULARITE_TEMPS = 0.005;
 	private static double GRANULARITE_TEMPS = 0.05;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
-	private static double COEFFICINT_FROTEMENT = 0.45;
+	private static double COEFFICINT_FROTEMENT = 0.15;
 	
 	public Balle(){
 		this.masse = MASSE_OFFCIEL;
@@ -62,9 +62,9 @@ public class Balle extends PointMateriel {
 		System.out.println("Hello World !");
 		
 		calcul.Vecteur vinit = new calcul.Vecteur();
-		vinit.setPhi(2.8);
+		vinit.setPhi(3.05);
 		vinit.setThetas(1.3);
-		vinit.setRayons(35);
+		vinit.setRayons(45);
 		calcul.Balle balle = new calcul.Balle(new Vecteur(3,1,1), vinit);
 		
 
