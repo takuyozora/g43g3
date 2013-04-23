@@ -16,65 +16,100 @@ public class LancerUn {
 	public int mur;
 	public Vecteur cible = new Vecteur();
 	
-	public LancerUn(double xinit, double yinit, double zinit, int mur, double xfinal, double yfinal, double zfinal){
-		this.posinit.setX(xinit);
-		this.posinit.setY(yinit);
-		this.posinit.setZ(zinit);
+	public LancerUn(Vecteur posinit, int mur, Vecteur cible){
+		this.posinit = posinit;
 		this.mur= mur;
-		this.cible.setX(xfinal);
-		this.cible.setY(yfinal);
-		this.cible.setZ(zfinal);
+		this.cible = cible;
 		
 	}
 	
-	private double calculLigneTir(Vecteur posinitiale, int mur, Vecteur target ){
+	private double calculPhiTir(Vecteur posinitiale, int mur, Vecteur target ){
 		
-		double result = 0;
+		double result;
 		
-		if (mur == MUR_NORD || mur == MUR_SUD) {
+		if (mur == MUR_OUEST) {
+			
+			result = (posinitiale.y + target.y)/2 ;
+			result = (3/2)*Math.PI + Math.atan(Math.abs(result-posinit.y)/posinit.x);
+			
+		}
+		else if (mur == MUR_EST) {
+			
+			result = (posinitiale.y + target.y)/2 ;
+			result = (1/2)*Math.PI - Math.atan(Math.abs(result-posinit.y)/Espace.LARGEUR - posinit.x);
+			
+		}	
+		else if (mur == MUR_SUD){
+			
 			result = (posinitiale.x + target.x)/2 ;
+			result = Math.PI + Math.atan(Math.abs(result-posinit.x)/posinit.y);
+			
 		}
-		else if (mur == MUR_EST || mur == MUR_OUEST){
-			result = (posinitiale.y + target.y)/2 ;			
+		else if (mur == MUR_NORD) {
+			result = (posinitiale.x + target.x)/2 ;
+			result = 2*Math.PI - Math.atan(Math.abs(result-posinit.x)/Espace.PROFONDEUR - posinit.x);
 		}
+		
 		else{
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("On ne définit pas correctement le mur voulu");
 		}
 		return result ;
 	}
 	
 	public Vecteur calculTir(Vecteur posinitiale, Vecteur target, int mur){
 		
-		double lignetir = this.calculLigneTir(posinitiale, mur, target);
+		double lignetir = this.calculPhiTir(posinitiale, mur, target);
+		
 		Vecteur posfinale = new Vecteur();
 		
 		Vecteur vitesseinit = new Vecteur();
+		vitesseinit.setThetas(Math.PI/2);
+		vitesseinit.setRayons(42);
+		vitesseinit.setPhi(lignetir);
 		
-		if (this.mur == MUR_OUEST){
+		int count = 0;		
 			
-			while (Vecteur.operation(posfinale, target, Vecteur.OPE_MOINS).norme() >= 0.05){
+		while (Vecteur.operation(posfinale, target, Vecteur.OPE_MOINS).norme() >= 1){
+			
+			Balle balletir = new Balle(posinitiale, vitesseinit);
 				
-				vitesseinit.phi = (3/2)*Math.PI + Math.atan(Math.abs(lignetir-posinit.y)/posinit.x);
-				vitesseinit.thetas = Math.PI/2;
-				vitesseinit.rayons = 42;
-				
-				Balle balletir = new Balle(posinit, vitesseinit);
-				
-				posfinale = balletir.lancer();	
+			posfinale = balletir.lancer();	
 				
 			if (posfinale.x > target.x){
-				vitesseinit.rayons = vitesseinit.rayons - 1;
-				vitesseinit.thetas = vitesseinit.thetas - Math.PI/12;
+					
+				vitesseinit.setRayons (vitesseinit.rayons / 1.2);
+//				vitesseinit.setThetas (vitesseinit.thetas - Math.PI/12);
+					
 			}
+				
 			if (posfinale.x < target.x){
-				vitesseinit.rayons = vitesseinit.rayons + 1;
-				vitesseinit.thetas = vitesseinit.thetas + Math.PI/12;
+					
+				vitesseinit.setRayons(vitesseinit.rayons * 1.2);
+//				vitesseinit.setThetas(vitesseinit.thetas + Math.PI/12);
+				
 			}
 			
+			count += 1;
+			
+			System.out.println (count);
+			System.out.println (Vecteur.operation(posfinale, target, Vecteur.OPE_MOINS).norme());
+			
+			if (count == 500){
+				throw new RuntimeException("Trop d'itérations");
 			}
 			
 		}
 		
+		return vitesseinit;
+	}
+	
+	public static void main(String[] args){
+		Vecteur posi = new Vecteur(3, 2 , 1);
+		int mur1 = 12;
+		Vecteur posf = new Vecteur(5, 4.5 , 0);
+		LancerUn lancer = new LancerUn(posi, mur1, posf);
+		Vecteur vinit = lancer.calculTir(posi, posf, mur1);
+		System.out.println(vinit.phi + vinit.thetas + vinit.rayons);
 	}
 	
 }

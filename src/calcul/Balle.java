@@ -7,7 +7,7 @@ public class Balle extends PointMateriel {
 	
 	private static double MASSE_OFFICIEL = 0.024;
 	//private static double GRANULARITE_TEMPS = 0.005;
-	private static double GRANULARITE_TEMPS = 0.05;
+	private static double GRANULARITE_TEMPS = 0.005;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
 	private static double COEFFICIENT_FROTTEMENT = 0.15;
 	
@@ -23,12 +23,14 @@ public class Balle extends PointMateriel {
 	
 	public Vecteur lancer(){
 		double time = 0;
+		boolean hitAWall = false;
 		int impact = Espace.PAS_IMPACT; 
 		while(impact != Espace.IMPACT_SOL){
 			//System.out.println(time+","+this.position.x+","+this.position.y+","+this.position.z);
-			System.out.println(this.position.x+","+this.position.y);
+			//System.out.println(this.position.x+","+this.position.y);
 			if(impact != Espace.PAS_IMPACT){
 				this.rebond(impact);
+				hitAWall=true;
 				//System.out.println("----"+impact);
 			}
 			this.subirForce(Espace.GRAVITE, GRANULARITE_TEMPS);
@@ -36,6 +38,9 @@ public class Balle extends PointMateriel {
 			this.continuerMouvement(GRANULARITE_TEMPS);
 			impact = Espace.impact(this.position);
 			//time += GRANULARITE_TEMPS;
+		}
+		if (hitAWall != true){
+			throw new RuntimeException("Pas Assez de puissance");
 		}
 		return this.position;
 	}
