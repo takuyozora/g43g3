@@ -195,4 +195,8 @@ public class Vecteur {
 		this.updateAll(TYPE_CYLINDRIQUE);
 	}
 	
+	public double norme(){
+		return this.rayons;
+	}
+	
 }
