@@ -30,24 +30,24 @@ public class LancerUn {
 		if (mur == MUR_OUEST) {
 			
 			result = (posinitiale.y + target.y)/2 ;
-			result = (3/2)*Math.PI + Math.atan(Math.abs(result-posinit.y)/posinit.x);
+			result = (Math.PI) - Math.atan((result-posinitiale.y)/posinitiale.x);
 			
 		}
 		else if (mur == MUR_EST) {
 			
 			result = (posinitiale.y + target.y)/2 ;
-			result = (1/2)*Math.PI - Math.atan(Math.abs(result-posinit.y)/Espace.LARGEUR - posinit.x);
+			result = Math.atan((result-posinitiale.y)/Espace.LARGEUR - posinitiale.x);
 			
 		}	
 		else if (mur == MUR_SUD){
 			
 			result = (posinitiale.x + target.x)/2 ;
-			result = Math.PI + Math.atan(Math.abs(result-posinit.x)/posinit.y);
+			result = (3/2)*(Math.PI) + Math.atan((result-posinit.x)/posinit.y);
 			
 		}
 		else if (mur == MUR_NORD) {
 			result = (posinitiale.x + target.x)/2 ;
-			result = 2*Math.PI - Math.atan(Math.abs(result-posinit.x)/Espace.PROFONDEUR - posinit.x);
+			result = (1/2)*(Math.PI) - Math.atan((result-posinitiale.x)/Espace.PROFONDEUR - posinitiale.x);
 		}
 		
 		else{
@@ -63,40 +63,109 @@ public class LancerUn {
 		Vecteur posfinale = new Vecteur();
 		
 		Vecteur vitesseinit = new Vecteur();
-		vitesseinit.setThetas(Math.PI/2);
-		vitesseinit.setRayons(42);
+		vitesseinit.setThetas(1.53);//(Math.PI)*(5/12)
+		vitesseinit.setRayons(20);
 		vitesseinit.setPhi(lignetir);
 		
 		int count = 0;		
 			
 		while (Vecteur.operation(posfinale, target, Vecteur.OPE_MOINS).norme() >= 1){
+			if (count == 10){
+				throw new RuntimeException("Trop d'itérations");
+			}
 			
-			Balle balletir = new Balle(posinitiale, vitesseinit);
+			Balle balletir = new Balle(new Vecteur (posinitiale.x, posinitiale.y, posinitiale.z) , new Vecteur (vitesseinit.x, vitesseinit.y, vitesseinit.z));
+			
+			System.out.println("Vitesse : "+(vitesseinit.rayons*3.6)+"km/h \n");
+			System.out.println("Angle phi en degrés :" + (vitesseinit.phi*57.3) + "\n");
+//			posfinale = balletir.lancer();
+			try{
+				posfinale = balletir.lancer();
+			}
+			catch(UnsupportedOperationException e){
+				System.out.println("Plafond -> baisser theta !!");
+				vitesseinit.setThetas(vitesseinit.thetas - 0.1);
+				continue;
+			}
+			catch(RuntimeException e){
+				System.out.println("EXCEPT !!");
+				vitesseinit.setRayons(vitesseinit.rayons * 1.25);
+				continue;
+			}
+			
+			if (mur == MUR_OUEST){	
 				
-			posfinale = balletir.lancer();	
+				if (posfinale.x > target.x){
+					
+					vitesseinit.setRayons (vitesseinit.rayons * 0.95);
+					balletir.vitesse.setThetas (vitesseinit.thetas + 0.2);
+					
+				}
 				
-			if (posfinale.x > target.x){
+				if (posfinale.x < target.x){
 					
-				vitesseinit.setRayons (vitesseinit.rayons / 1.2);
-//				vitesseinit.setThetas (vitesseinit.thetas - Math.PI/12);
+					vitesseinit.setRayons(vitesseinit.rayons * 1.05);
+					vitesseinit.setThetas(vitesseinit.thetas - 0.2);
+				
+				}
+			}
+			
+			if (mur == MUR_EST){
+				
+				if (posfinale.x < target.x){
 					
+					vitesseinit.setRayons (vitesseinit.rayons * 0.95);
+					balletir.vitesse.setThetas (vitesseinit.thetas + 0.2);
+						
+				}
+					
+				if (posfinale.x > target.x){
+						
+					vitesseinit.setRayons(vitesseinit.rayons * 1.05);
+					vitesseinit.setThetas(vitesseinit.thetas - 0.2);
+					
+				}
 			}
 				
-			if (posfinale.x < target.x){
+			if (mur == MUR_NORD){
+
+				if (posfinale.y < target.y){
 					
-				vitesseinit.setRayons(vitesseinit.rayons * 1.2);
-//				vitesseinit.setThetas(vitesseinit.thetas + Math.PI/12);
+					vitesseinit.setRayons (vitesseinit.rayons * 0.95);
+					balletir.vitesse.setThetas (vitesseinit.thetas + 0.2);
+					
+				}
 				
+				if (posfinale.y > target.y){
+					
+					vitesseinit.setRayons(vitesseinit.rayons * 1.05);
+					vitesseinit.setThetas(vitesseinit.thetas - 0.2);
+				
+				}
+			
+			}
+			
+			if (mur == MUR_SUD){
+
+				if (posfinale.y < target.x){
+					
+					vitesseinit.setRayons (vitesseinit.rayons * 0.95);
+					balletir.vitesse.setThetas (vitesseinit.thetas + 0.2);
+					
+				}
+				
+				if (posfinale.x > target.x){
+					
+					vitesseinit.setRayons(vitesseinit.rayons * 1.05);
+					vitesseinit.setThetas(vitesseinit.thetas - 0.2);
+				
+				}
 			}
 			
 			count += 1;
 			
-			System.out.println (count);
-			System.out.println (Vecteur.operation(posfinale, target, Vecteur.OPE_MOINS).norme());
-			
-			if (count == 500){
-				throw new RuntimeException("Trop d'itérations");
-			}
+			System.out.println ("Itération n°: "+count +"\n");
+			System.out.println ("Erreur : "+Vecteur.operation(posfinale, target, Vecteur.OPE_MOINS).norme() + "\n ---------- \n" );
 			
 		}
 		
@@ -104,11 +173,11 @@ public class LancerUn {
 	}
 	
 	public static void main(String[] args){
-		Vecteur posi = new Vecteur(3, 2 , 1);
-		int mur1 = 12;
-		Vecteur posf = new Vecteur(5, 4.5 , 0);
-		LancerUn lancer = new LancerUn(posi, mur1, posf);
-		Vecteur vinit = lancer.calculTir(posi, posf, mur1);
+		Vecteur posi = new Vecteur(2, 2 , 1);
+		int murun = 13;
+		Vecteur posf = new Vecteur(4, 6 , 0);
+		LancerUn lancer = new LancerUn(posi, murun, posf);
+		Vecteur vinit = lancer.calculTir(posi, posf, murun);
 		System.out.println(vinit.phi + vinit.thetas + vinit.rayons);
 	}
 	
