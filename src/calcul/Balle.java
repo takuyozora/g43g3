@@ -44,7 +44,7 @@ public class Balle extends PointMateriel {
 			}
 			
 			this.subirForce(Vecteur.pscalaire(Espace.GRAVITE, this.masse), GRANULARITE_TEMPS);
-			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT*this.vitesse.rayons), GRANULARITE_TEMPS);
+			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT), GRANULARITE_TEMPS);
 			this.continuerMouvement(GRANULARITE_TEMPS);
 			impact = Espace.impact(this.position);
 			

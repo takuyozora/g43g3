@@ -45,6 +45,7 @@ public final class Espace {
 		}
 		
 		else if(position.z < 0){
+			position.setZ(0);
 			return IMPACT_SOL;
 		}
 		

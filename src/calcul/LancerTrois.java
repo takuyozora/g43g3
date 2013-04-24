@@ -24,7 +24,6 @@ public class LancerTrois {
 	}
 		
 	private double[] calculFourchette(Vecteur posinitiale, int murmur){
-		
 		double[]result = {0,0,0,0};
 			
 		if (murmur == LancerTrois.MUR_NORD){
@@ -38,9 +37,7 @@ public class LancerTrois {
 			result[1] = phimax;
 			result[2] = thetamin;
 			result[3] = thetamax;
-		}
-		
-		else if (murmur == LancerTrois.MUR_SUD){
+		}else if (murmur == LancerTrois.MUR_SUD){
 			
 			double phimin = Vecteur.fractionPi(3, 2) - Math.atan((posinitiale.x)/(posinitiale.y));
 			double phimax = Vecteur.fractionPi(3, 2) + Math.atan((Espace.LARGEUR - posinitiale.x)/(posinitiale.y));
@@ -51,9 +48,7 @@ public class LancerTrois {
 			result[1] = phimax;
 			result[2] = thetamin;
 			result[3] = thetamax;
-		}
-		
-		else if (murmur == LancerTrois.MUR_EST){
+		}else if (murmur == LancerTrois.MUR_EST){
 
 			double phimin = - Math.atan((posinitiale.y)/(Espace.LARGEUR - posinitiale.x));
 			double phimax = Math.atan((Espace.PROFONDEUR - posinitiale.y)/(Espace.LARGEUR - posinitiale.x));
@@ -64,9 +59,7 @@ public class LancerTrois {
 			result[1] = phimax;
 			result[2] = thetamin;
 			result[3] = thetamax;
-		}
-		
-		else if (murmur == LancerTrois.MUR_OUEST){
+		}else if (murmur == LancerTrois.MUR_OUEST){
 			
 			double phimin = Vecteur.fractionPi(1, 1) - Math.atan((Espace.PROFONDEUR - posinitiale.y)/(posinitiale.x));
 			double phimax = Vecteur.fractionPi(1, 1) + Math.atan((posinitiale.y)/(posinitiale.x));
@@ -77,9 +70,7 @@ public class LancerTrois {
 			result[1] = phimax;
 			result[2] = thetamin;
 			result[3] = thetamax;
-		}
-
-		else{
+		}else{
 			
 			throw new IllegalArgumentException("On ne définit pas correctement le mur voulu");
 		}
@@ -89,13 +80,11 @@ public class LancerTrois {
 	}
 	
 	public Vecteur tir(){
-		
 		double[]fourchette = calculFourchette(this.posinit, this.mur);
 		
 		int count = 0;
 		
 		Vecteur posfinale = new Vecteur();
-		
 		Vecteur vitesseinit = new Vecteur();
 		
 		while (Vecteur.operation(posfinale, this.cible, Vecteur.OPE_MOINS).norme() >= 0.2){
@@ -112,19 +101,15 @@ public class LancerTrois {
 			
 			try{
 				posfinale = balletir.lancer(1);
-			}
-			catch(UnsupportedOperationException e){
+				System.out.println("Ecart :"+Vecteur.operation(posfinale, this.cible, Vecteur.OPE_MOINS).norme());
+			}catch(UnsupportedOperationException e){
 				System.out.println(e);
 				continue;
-			}
-			catch(RuntimeException e){
+			}catch(RuntimeException e){
 				System.out.println(e);
 				continue;
 			
 			}
-			
-			
-						
 		}
 		
 		System.out.println("Nbres d'itérations : " + count + "\n");
@@ -134,7 +119,7 @@ public class LancerTrois {
 	
 	public static void main(String[] args){
 		Vecteur posi = new Vecteur(2, 2 , 1.5);
-		int murun = 11;
+		int murun = LancerTrois.MUR_SUD;
 		Vecteur posf = new Vecteur(4, 6 , 0);
 		LancerTrois lancer = new LancerTrois(posi, murun, posf);
 		long begin = System.currentTimeMillis();
