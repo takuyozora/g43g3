@@ -6,11 +6,11 @@ public class Balle extends PointMateriel {
 	 */
 	
 	private static double MASSE_OFFICIELLE = 0.024;
-	private static double GRANULARITE_TEMPS = 0.1;
+	private static double GRANULARITE_TEMPS = 0.05;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
 	private static double COEFFICIENT_FROTTEMENT = 0.15;
 	
-	public int nbrebond = 0;
+	public int nbrebond;
 	
 	private boolean hitAWall = false;
 	
@@ -25,6 +25,9 @@ public class Balle extends PointMateriel {
 	}
 	
 	public Vecteur lancer(){
+		
+		nbrebond = 0;
+		
 		double time = 0;
 		int impact = Espace.PAS_IMPACT; 
 		while(impact != Espace.IMPACT_SOL){

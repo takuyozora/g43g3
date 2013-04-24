@@ -199,4 +199,15 @@ public class Vecteur {
 		return this.rayons;
 	}
 	
+	public static double fractionPi(int a, int b){
+		
+		double c = Math.PI;
+		
+		double d = (double)(a)/(double)(b);
+		
+		double result = c*d;
+		
+		return result;
+	}
+	
 }

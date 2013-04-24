@@ -18,7 +18,7 @@ public class LancerTrois {
 	
 	public LancerTrois(Vecteur posinit, int mur, Vecteur cible){
 		this.posinit = posinit;
-		this.mur= mur;
+		this.mur = mur;
 		this.cible = cible;
 		
 	}
@@ -29,10 +29,10 @@ public class LancerTrois {
 			
 		if (murmur == LancerTrois.MUR_NORD){
 			
-			double phimin = Math.PI*(1/2) - Math.atan((Espace.LARGEUR - posinitiale.x)/(Espace.PROFONDEUR - posinitiale.y));
-			double phimax = Math.PI*(1/2) + Math.atan((posinitiale.x)/(Espace.PROFONDEUR - posinitiale.y));
-			double thetamin = Math.PI*(1/2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(Espace.PROFONDEUR - posinitiale.y));
-			double thetamax = Math.PI*(1/2) - Math.atan((posinitiale.z)/(Espace.PROFONDEUR - posinitiale.y));
+			double phimin = Vecteur.fractionPi(1,2) - Math.atan((Espace.LARGEUR - posinitiale.x)/(Espace.PROFONDEUR - posinitiale.y));
+			double phimax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.x)/(Espace.PROFONDEUR - posinitiale.y));
+			double thetamin = Vecteur.fractionPi(1,2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(Espace.PROFONDEUR - posinitiale.y));
+			double thetamax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.z)/(Espace.PROFONDEUR - posinitiale.y));
 			
 			result[0] = phimin;
 			result[1] = phimax;
@@ -40,12 +40,12 @@ public class LancerTrois {
 			result[3] = thetamax;
 		}
 		
-		if (murmur == LancerTrois.MUR_SUD){
+		else if (murmur == LancerTrois.MUR_SUD){
 			
-			double phimin = Math.PI*(3/2) - Math.atan((posinitiale.x)/(posinitiale.y));
-			double phimax = Math.PI*(3/2) + Math.atan((Espace.LARGEUR - posinitiale.x)/(posinitiale.y));
-			double thetamin = Math.PI*(1/2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(posinitiale.y));
-			double thetamax = Math.PI*(1/2) - Math.atan((posinitiale.z)/(posinitiale.y));
+			double phimin = Vecteur.fractionPi(3, 2) - Math.atan((posinitiale.x)/(posinitiale.y));
+			double phimax = Vecteur.fractionPi(3, 2) + Math.atan((Espace.LARGEUR - posinitiale.x)/(posinitiale.y));
+			double thetamin = Vecteur.fractionPi(1, 2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(posinitiale.y));
+			double thetamax = Vecteur.fractionPi(1, 2) + Math.atan((posinitiale.z)/(posinitiale.y));
 
 			result[0] = phimin;
 			result[1] = phimax;
@@ -53,12 +53,12 @@ public class LancerTrois {
 			result[3] = thetamax;
 		}
 		
-		if (murmur == LancerTrois.MUR_EST){
+		else if (murmur == LancerTrois.MUR_EST){
 
 			double phimin = - Math.atan((posinitiale.y)/(Espace.LARGEUR - posinitiale.x));
 			double phimax = Math.atan((Espace.PROFONDEUR - posinitiale.y)/(Espace.LARGEUR - posinitiale.x));
-			double thetamin = Math.PI*(1/2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(Espace.LARGEUR - posinitiale.x));
-			double thetamax = Math.PI*(1/2) - Math.atan((posinitiale.z)/(Espace.LARGEUR - posinitiale.x));
+			double thetamin = Vecteur.fractionPi(1,2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(Espace.LARGEUR - posinitiale.x));
+			double thetamax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.z)/(Espace.LARGEUR - posinitiale.x));
 			
 			result[0] = phimin;
 			result[1] = phimax;
@@ -66,12 +66,12 @@ public class LancerTrois {
 			result[3] = thetamax;
 		}
 		
-		if (murmur == LancerTrois.MUR_OUEST){
+		else if (murmur == LancerTrois.MUR_OUEST){
 			
-			double phimin = Math.PI - Math.atan((Espace.PROFONDEUR - posinitiale.y)/(posinitiale.x));
-			double phimax = Math.PI + Math.atan((posinitiale.y)/(posinitiale.x));
-			double thetamin = Math.PI*(1/2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(posinitiale.x));
-			double thetamax = Math.PI*(1/2) - Math.atan((posinitiale.z)/(posinitiale.x));
+			double phimin = Vecteur.fractionPi(1, 1) - Math.atan((Espace.PROFONDEUR - posinitiale.y)/(posinitiale.x));
+			double phimax = Vecteur.fractionPi(1, 1) + Math.atan((posinitiale.y)/(posinitiale.x));
+			double thetamin = Vecteur.fractionPi(1,2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(posinitiale.x));
+			double thetamax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.z)/(posinitiale.x));
 
 			result[0] = phimin;
 			result[1] = phimax;
@@ -131,9 +131,9 @@ public class LancerTrois {
 	
 	public static void main(String[] args){
 		Vecteur posi = new Vecteur(2, 2 , 1.5);
-//		int murun = 12;
+		int murun = 11;
 		Vecteur posf = new Vecteur(4, 6 , 0);
-		LancerTrois lancer = new LancerTrois(posi, 12, posf);
+		LancerTrois lancer = new LancerTrois(posi, murun, posf);
 		Vecteur vinit = lancer.tir();
 		System.out.println(vinit.phi + vinit.thetas + vinit.rayons);
 	}
