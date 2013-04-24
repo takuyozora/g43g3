@@ -80,7 +80,7 @@ public class LancerUn {
 			System.out.println("Angle phi en degrés :" + (vitesseinit.phi*57.3) + "\n");
 //			posfinale = balletir.lancer();
 			try{
-				posfinale = balletir.lancer();
+				posfinale = balletir.lancer(1);
 			}
 			catch(UnsupportedOperationException e){
 				System.out.println("Plafond -> baisser theta !!");

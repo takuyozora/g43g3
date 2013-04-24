@@ -6,13 +6,11 @@ public class Balle extends PointMateriel {
 	 */
 	
 	private static double MASSE_OFFICIELLE = 0.024;
-	private static double GRANULARITE_TEMPS = 0.05;
+	private static double GRANULARITE_TEMPS = 0.02;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
 	private static double COEFFICIENT_FROTTEMENT = 0.15;
 	
 	public int nbrebond;
-	
-	private boolean hitAWall = false;
 	
 	public Balle(){
 		this.masse = MASSE_OFFICIELLE;
@@ -24,31 +22,38 @@ public class Balle extends PointMateriel {
 		this.masse = MASSE_OFFICIELLE;
 	}
 	
-	public Vecteur lancer(){
+	public Vecteur lancer(int nbre){
 		
-		nbrebond = 0;
+		this.nbrebond = 0;
 		
-		double time = 0;
+//		double time = 0;
 		int impact = Espace.PAS_IMPACT; 
 		while(impact != Espace.IMPACT_SOL){
 //			System.out.println(time+","+this.position.x+","+this.position.y+","+this.position.z);
 //			System.out.println(this.position.x+","+this.position.y);
 			if(impact != Espace.PAS_IMPACT){
 				
-				this.rebond(impact);
-				this.nbrebond += 1;				
+				this.nbrebond += 1;
+				
+				if (this.nbrebond > nbre){
+					
+					throw new RuntimeException("Trop de rebond");
+				}
+								
+					this.rebond(impact);
 			}
 			
 			this.subirForce(Vecteur.pscalaire(Espace.GRAVITE, this.masse), GRANULARITE_TEMPS);
-			//this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT*this.vitesse.rayons), GRANULARITE_TEMPS);
+			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT*this.vitesse.rayons), GRANULARITE_TEMPS);
 			this.continuerMouvement(GRANULARITE_TEMPS);
 			impact = Espace.impact(this.position);
 			
 		}
-//		if (this.hitAWall == false){
-//			throw new RuntimeException("Pas Assez de puissance");
-//		}
-
+		if (this.nbrebond < nbre){
+			
+			throw new RuntimeException("Pas assez de rebond");
+		}
+		
 		System.out.println("X: " + this.position.x + " , Y: " + this.position.y + " , Z: " + this.position.z + "\n");
 		
 		return this.position;
@@ -58,7 +63,6 @@ public class Balle extends PointMateriel {
 		/*
 		 * Gère les rebonds
 		 */
-		this.hitAWall = true;
 		if( impact == Espace.IMPACT_NORD ){
 			System.out.println("A touché le mur NORD \n");
 			this.vitesse.setY(-this.vitesse.y);

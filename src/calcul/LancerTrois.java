@@ -98,30 +98,33 @@ public class LancerTrois {
 		
 		Vecteur vitesseinit = new Vecteur();
 		
-		while (Vecteur.operation(posfinale, this.cible, Vecteur.OPE_MOINS).norme() >= 0.15){
+		while (Vecteur.operation(posfinale, this.cible, Vecteur.OPE_MOINS).norme() >= 0.2){
 			
 			count += 1;
 			
 			vitesseinit.setPhi(Math.random()*(fourchette[1]-fourchette[0])+fourchette[0]);
 			vitesseinit.setThetas(Math.random()*(fourchette[3]-fourchette[2])+fourchette[2]);
-			vitesseinit.setRayons(Math.random()*45);
+			vitesseinit.setRayons(Math.random()*40);
 			
 			Balle balletir = new Balle(new Vecteur (this.posinit.x, posinit.y, posinit.z) , new Vecteur (vitesseinit.x, vitesseinit.y, vitesseinit.z));
 			
+			System.out.println("Vitesse : "+(vitesseinit.rayons*3.6)+"km/h \n");
+			
 			try{
-				posfinale = balletir.lancer();
+				posfinale = balletir.lancer(1);
 			}
 			catch(UnsupportedOperationException e){
+				System.out.println(e);
 				continue;
 			}
 			catch(RuntimeException e){
+				System.out.println(e);
 				continue;
 			
 			}
-			if (balletir.nbrebond > 1){
-				continue;
-			}
 			
+			
+						
 		}
 		
 		System.out.println("Nbres d'itérations : " + count + "\n");
@@ -134,8 +137,11 @@ public class LancerTrois {
 		int murun = 11;
 		Vecteur posf = new Vecteur(4, 6 , 0);
 		LancerTrois lancer = new LancerTrois(posi, murun, posf);
+		long begin = System.currentTimeMillis();
 		Vecteur vinit = lancer.tir();
-		System.out.println(vinit.phi + vinit.thetas + vinit.rayons);
+		long end = System.currentTimeMillis();
+		float time = ((float) (end-begin));
+		System.out.println("Vitesse : " + vinit.norme() + " Temps : " +time);
 	}
 	
 }
