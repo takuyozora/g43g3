@@ -5,10 +5,31 @@ public class Balle extends PointMateriel {
 	 * Classe représentant la balle
 	 */
 	
+	class TropDeRebondError extends Exception {
+		public TropDeRebondError(String message)
+		  {
+		    super(message);
+		  }
+	}
+	
+	class RebondMurError extends Exception {
+		public RebondMurError(String message)
+		  {
+		    super(message);
+		  }
+	}
+
+	class PasAssezDeRebondError extends Exception {
+		public PasAssezDeRebondError(String message)
+		  {
+		    super(message);
+		  }
+	}
+	
 	private static double MASSE_OFFICIELLE = 0.024;
-	private static double GRANULARITE_ESPACE = 0.01;
+	private static double GRANULARITE_ESPACE = 0.03;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
-	private static double COEFFICIENT_FROTTEMENT = 0.15;
+	private static double COEFFICIENT_FROTTEMENT = 0.035;
 	
 	public int nbrebond;
 	
@@ -27,7 +48,7 @@ public class Balle extends PointMateriel {
 		return deltaT;
 	}
 	
-	public Vecteur lancer(int nbre){
+	public Vecteur lancer(int nbre) throws TropDeRebondError, PasAssezDeRebondError, RebondMurError{
 		
 		this.nbrebond = 0;
 
@@ -39,16 +60,15 @@ public class Balle extends PointMateriel {
 				
 				this.nbrebond += 1;
 				
-//				if (this.nbrebond > nbre){
-//					
-//					throw new RuntimeException("Trop de rebond");
-//				}
+				if(nbrebond > nbre){
+					throw new TropDeRebondError("Trop");
+				}
 								
 					this.rebond(impact);
 			}
 			
 			this.subirForce(Vecteur.pscalaire(Espace.GRAVITE, this.masse), this.getDeltaT());
-			//this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT), GRANULARITE_TEMPS);
+			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT), this.getDeltaT());
 			this.continuerMouvement(this.getDeltaT());
 			impact = Espace.impact(this.position);
 			
@@ -60,29 +80,33 @@ public class Balle extends PointMateriel {
 //		
 //		System.out.println("X: " + this.position.x + " , Y: " + this.position.y + " , Z: " + this.position.z + "\n");
 		if(nbrebond != nbre){
-			throw new RuntimeException("Trop ou pas assez de rebond");
+			if(nbrebond > nbre){
+				throw new TropDeRebondError("Trop");
+			}else{
+				throw new PasAssezDeRebondError("Pas Assez");
+			}
 		}
 		return this.position;
 	}
 	
-	public void rebond(int impact){
+	public void rebond(int impact) throws RebondMurError{
 		/*
 		 * Gère les rebonds
 		 */
 		if( impact == Espace.IMPACT_NORD ){
-			System.out.println("A touché le mur NORD \n");
+//			System.out.println("A touché le mur NORD \n");
 			this.vitesse.setY(-this.vitesse.y);
 		}else if (impact == Espace.IMPACT_SUD){
-			System.out.println("A touché le mur SUD \n");
+//			System.out.println("A touché le mur SUD \n");
 			this.vitesse.setY(-this.vitesse.y);
 		}else if( impact == Espace.IMPACT_EST){
-			System.out.println("A touché le mur EST \n");
+//			System.out.println("A touché le mur EST \n");
 			this.vitesse.setX(-this.vitesse.x);
 		}else if( impact == Espace.IMPACT_OUEST){
-			System.out.println("A touché le mur OUEST \n");
+//			System.out.println("A touché le mur OUEST \n");
 			this.vitesse.setX(-this.vitesse.x);
 		}else if( impact == Espace.IMPACT_PLAFOND){
-			throw new UnsupportedOperationException("Pas encore prévus");
+			throw new RebondMurError("Pas encore prévus");
 		}
 		this.vitesse.pscalaire(1-COEFFICIENT_ABSORBTION); // Ici on ammorti la balle
 	}

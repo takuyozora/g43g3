@@ -1,5 +1,8 @@
 package calcul;
 
+import calcul.Balle.PasAssezDeRebondError;
+import calcul.Balle.RebondMurError;
+
 public class LancerTrois {
 	/*
 	 * LancerTrois est la classe qui permet de trouver les paramètres de tirs avec comme 
@@ -152,111 +155,112 @@ public class LancerTrois {
 		return phi;
 	}
 	
-	public static Vecteur multiTry(Vecteur posTireur, Vecteur posCible, int murCible){
-		Vecteur vitesseTry = new Vecteur();
-		
-		Vecteur vitesseLancer = new Vecteur();
-		vitesseLancer.setPhi(LancerTrois.calculPhiTir(posTireur, posCible, murCible));
-		
-		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
-		
-		double vmax = 40;
-		double ecartMax = 0;
-		boolean downSpeed = true;
-		double newVitesse = 0;
-		boolean fixeVitesse = false;
-		
-		double errLast = 0;
-		double err = 0;
-		double vitesse = 40;
-		double lastChangeVitesse = vmax;
-		double maxIter = 1000;
-		boolean rightWall = true;
-		int affile = 1;
-	
-		for(double i=30;i<maxIter;i++){
-//			vitesseTry.setX(0);
-//			vitesseTry.setY(0);
-//			vitesseTry.setZ(0);
-			vitesseTry.setThetas(1.3);
-			if (errLast == 0){
-				vitesse -= 40/maxIter;
-			}else{
-				System.out.println("Vitesse : "+vitesse);
-					if(err-errLast <0){
-							if(downSpeed){
-								vitesse -=  affile * affile * vmax / maxIter;
-							}else{
-								vitesse += affile * affile * vmax / maxIter;
-							}
-							affile += 1;
-						
-					}else{
-						System.out.println("Change");
-						if(downSpeed){
-							// On change de sens vers une augmentation de vitesse
-							ecartMax = Math.abs(lastChangeVitesse - vitesse);
-							lastChangeVitesse = vitesse;
-							vitesse += ecartMax/2;
-							affile = 1;
-							downSpeed = false;
-						}else{
-							// On change de sens vers une diminution de vitesse
-							ecartMax = Math.abs(lastChangeVitesse - vitesse);
-							lastChangeVitesse = vitesse;
-							vitesse -= ecartMax/2;
-							affile = 1;
-							downSpeed = true;
-						}
-					}
-				
-//				if(err - errLast < 0){ // On a alors une amélioration, il faut continuer ainsi
-//					if(affile >0){
-//						affile+=1;
+//	public static Vecteur multiTry(Vecteur posTireur, Vecteur posCible, int murCible){
+//		Vecteur vitesseTry = new Vecteur();
+//		
+//		Vecteur vitesseLancer = new Vecteur();
+//		vitesseLancer.setPhi(LancerTrois.calculPhiTir(posTireur, posCible, murCible));
+//		
+//		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
+//		
+//		double vmax = 40;
+//		double ecartMax = 0;
+//		boolean downSpeed = true;
+//		double newVitesse = 0;
+//		boolean fixeVitesse = false;
+//		
+//		double errLast = 0;
+//		double err = 0;
+//		double vitesse = 40;
+//		double lastChangeVitesse = vmax;
+//		double maxIter = 1000;
+//		boolean rightWall = true;
+//		int affile = 1;
+//	
+//		for(double i=30;i<maxIter;i++){
+////			vitesseTry.setX(0);
+////			vitesseTry.setY(0);
+////			vitesseTry.setZ(0);
+//			vitesseTry.setThetas(1.3);
+//			if (errLast == 0){
+//				vitesse -= 40/maxIter;
+//			}else{
+//				System.out.println("Vitesse : "+vitesse);
+//					if(err-errLast <0){
+//							if(downSpeed){
+//								vitesse -=  affile * affile * vmax / maxIter;
+//							}else{
+//								vitesse += affile * affile * vmax / maxIter;
+//							}
+//							affile += 1;
+//						
 //					}else{
-//						affile=1;
+//						System.out.println("Change");
+//						if(downSpeed){
+//							// On change de sens vers une augmentation de vitesse
+//							ecartMax = Math.abs(lastChangeVitesse - vitesse);
+//							lastChangeVitesse = vitesse;
+//							vitesse += ecartMax/2;
+//							affile = 1;
+//							downSpeed = false;
+//						}else{
+//							// On change de sens vers une diminution de vitesse
+//							ecartMax = Math.abs(lastChangeVitesse - vitesse);
+//							lastChangeVitesse = vitesse;
+//							vitesse -= ecartMax/2;
+//							affile = 1;
+//							downSpeed = true;
+//						}
 //					}
-//					vitesse -= 40*affile/(maxIter+i);
-//				}else{
-//					if(affile <0){
-//						affile -= 1;
-//					}else{
-//						affile=-1;
-//					}
-//					System.out.println("retour");
-//					vitesse -= 40*affile/(maxIter+i);
-//				}
-			}
-			vitesseTry.setRayons(vitesse);
-			vitesseTry.setPhi(vitesseLancer.phi);
-//			System.out.println(vitesseTry.thetas);
-			
-			Balle balleTry = new Balle(new Vecteur(posTireur.x,posTireur.y,posTireur.z),vitesseTry);
-			Vecteur posArrivee = new Vecteur();
-			rightWall = true;
-			try{
-				posArrivee = balleTry.lancer(1);
-			}catch(RuntimeException e){
-				//System.out.println(e);
-				//vitesse *= 0.97;
-				rightWall = false;
-				continue;
-			}
-			errLast = err;
-			err = Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme();
-			System.out.println("   Erreur" +Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme() );
-			if(Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme() <= 0.20){
-				System.out.println("Trouvée en :"+i+" iteration avec "+Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme()+" d'erreur");
-				break;
-			}
-			
-		}
-		
-		
-		return vitesseTry;
-	}
+//				
+////				if(err - errLast < 0){ // On a alors une amélioration, il faut continuer ainsi
+////					if(affile >0){
+////						affile+=1;
+////					}else{
+////						affile=1;
+////					}
+////					vitesse -= 40*affile/(maxIter+i);
+////				}else{
+////					if(affile <0){
+////						affile -= 1;
+////					}else{
+////						affile=-1;
+////					}
+////					System.out.println("retour");
+////					vitesse -= 40*affile/(maxIter+i);
+////				}
+//			}
+//			vitesseTry.setRayons(vitesse);
+//			vitesseTry.setPhi(vitesseLancer.phi);
+////			System.out.println(vitesseTry.thetas);
+//			
+//			Balle balleTry = new Balle(new Vecteur(posTireur.x,posTireur.y,posTireur.z),vitesseTry);
+//			Vecteur posArrivee = new Vecteur();
+//			rightWall = true;
+//			try{
+//				posArrivee = balleTry.lancer(1);
+//			}catch(RuntimeException e){
+//				//System.out.println(e);
+//				//vitesse *= 0.97;
+//				rightWall = false;
+//				continue;
+//			}
+//			errLast = err;
+//			err = Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme();
+//			System.out.println("   Erreur" +Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme() );
+//			if(Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme() <= 0.20){
+//				System.out.println("Trouvée en :"+i+" iteration avec "+Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme()+" d'erreur");
+//				break;
+//			}
+//			
+//		}
+//		
+//		
+//		return vitesseTry;
+//	}
 	
 	public static Vecteur comboTry(Vecteur posTireur, Vecteur posCible, int murCible){
+		Vecteur bestTry = new Vecteur();
 		Vecteur vitesseTry = new Vecteur();
 		
 		Vecteur vitesseLancer = new Vecteur();
@@ -272,9 +276,13 @@ public class LancerTrois {
 		boolean slow = true;
 		
 		final double vMax = 40;
-		final int maxIter = 1000;
+		final int maxIter = 2000;
 		final double k0 = 2*vMax/maxIter; // k0 pour la suite de kn (le pas)
-		final double theTheta = 1.3; // Pour l'instant on fixe theta
+		
+		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
+		final double theTheta = 1.4 + Math.random()/5 - Math.random()/5 ; // Pour l'instant on fixe theta
+		
+		System.out.println("Theta :"+theTheta);
 		
 		double vitesse = vMax/2;
 
@@ -283,20 +291,38 @@ public class LancerTrois {
 		vitesseTry.setRayons(vitesse);
 		
 		Vecteur posTrouvee = new Vecteur();
+		double modif = 0;
+		long begin = System.currentTimeMillis();
 		
 		for(double n=1;n<maxIter;n++){
 			vitesseTry.setRayons(vitesse);
 			Balle balle = new Balle(posTireur,vitesseTry);
 			try{
 				posTrouvee = balle.lancer(1);
-			}catch(RuntimeException e){
-				System.out.println(e);
-//				vitesse -= k0 * exceptLoop * exceptLoop *exceptLoop;
+			}catch(Balle.TropDeRebondError e){
+//				System.out.println(e);
+				modif = k0 ;
 				if(slow){
-					vitesse -= 0.1;
+					vitesse -= modif;
 				}else{
-					vitesse += 0.1;
+					vitesse += modif;
 				}
+				exceptLoop += 1;
+				continue;
+			}catch(Balle.PasAssezDeRebondError e){
+//				System.out.println(e);
+				modif = k0;
+				if(slow){
+					vitesse -= modif;
+				}else{
+					vitesse += modif;
+				}
+				exceptLoop += 1;
+				continue;
+			}catch(Balle.RebondMurError e){
+//				System.out.println(e);
+				modif = k0 ;
+				vitesse -= modif;
 				exceptLoop += 1;
 				continue;
 			}
@@ -309,10 +335,12 @@ public class LancerTrois {
 			exceptLoop = 1;
 			errLast = err;
 			err = Vecteur.operation(posCible, posTrouvee, Vecteur.OPE_MOINS).norme();
-			errMin = Math.min(err,errMin);
-			
+			if(err <= errMin){
+				bestTry = new Vecteur(vitesseTry);
+				errMin = Math.min(err,errMin);
+			}			
 			if(err-errLast < 0){ // On s'améliore continuons !
-				double modif = (double)(k0 * aLaSuite * aLaSuite) * (double)(maxIter/(maxIter+(n*n))) ;
+				modif = (double)(k0 * aLaSuite * aLaSuite) * (double)(maxIter/(maxIter+(n*n))) ;
 				if (slow){
 					modif *= -1;
 				}
@@ -321,78 +349,87 @@ public class LancerTrois {
 			}else{
 				aLaSuite = 1;
 				slow = !slow; // On inverse
-				double modif = (k0 * aLaSuite * aLaSuite)* (maxIter/(maxIter+(n*n))) ;
+				modif = (k0 * aLaSuite * aLaSuite)* (maxIter/(maxIter+(n*n))) ;
 				if (slow){
 					modif *= -1;
 				}
 				vitesse -= modif;
 			}
 			
-			if(err < 0.02){
+			if(err < 0.08){
 				System.out.println("Touvée !! en "+n+"itteration !");
 				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
 				System.out.println("Trouv:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
 				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
-				break;
+				return vitesseTry;
+			}else if (n%50 == 0){
+				if(System.currentTimeMillis() - begin > 800){
+					break;
+				}
 			}
 			
 				
 				
 		}
-		
+		System.out.println("Meilleur résultat en "+maxIter+"itteration !");
+		System.out.println(" --> Erreur :"+errMin*100 +" cm");
+		System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
+		System.out.println("Trouv:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
+		System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
+		return bestTry;
 	
-		return vitesseTry;
+		
 	}
 	
 	
-	public static Vecteur Try(Vecteur posTireur, Vecteur posCible, int murCible){
-		Vecteur vitesseTry = new Vecteur();
-		
-		Vecteur vitesseLancer = new Vecteur();
-		vitesseLancer.setPhi(LancerTrois.calculPhiTir(posTireur, posCible, murCible));
-		
-		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
-		
-
-		
-		double errLast = 0;
-		double err = 0;
-		double vitesse = 40;
-
-		double maxIter = 2000;
-		int affile = 1;
-	
-		for(double i=10;i<maxIter;i++){
-			vitesse = 40 - (40*i/maxIter);
-			vitesseTry.setRayons(vitesse);
-			vitesseTry.setPhi(vitesseLancer.phi);
-			vitesseTry.setThetas(1.4);
-			System.out.println("Vitesse :"+vitesse);
-//			System.out.println(vitesseTry.thetas);
-			
-			Balle balleTry = new Balle(new Vecteur(posTireur.x,posTireur.y,posTireur.z),vitesseTry);
-			Vecteur posArrivee = new Vecteur();
-			
-			try{
-				posArrivee = balleTry.lancer(1);
-			}catch(RuntimeException e){
-				//System.out.println(e);
-				//vitesse *= 0.97;
-				continue;
-			}
-			errLast = err;
-			err = Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme();
-			System.out.println("   Erreur" +Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme() );
-			if(Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme() <= 0.1){
-				System.out.println("Trouvée en :"+i+" iteration avec "+Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme()+" d'erreur");
-				break;
-			}
-			
-		}
-		
-		
-		return vitesseTry;
-	}
+//	public static Vecteur Try(Vecteur posTireur, Vecteur posCible, int murCible){
+//		Vecteur vitesseTry = new Vecteur();
+//		
+//		Vecteur vitesseLancer = new Vecteur();
+//		vitesseLancer.setPhi(LancerTrois.calculPhiTir(posTireur, posCible, murCible));
+//		
+//		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
+//		
+//
+//		
+//		double errLast = 0;
+//		double err = 0;
+//		double vitesse = 40;
+//
+//		double maxIter = 2000;
+//		int affile = 1;
+//	
+//		for(double i=10;i<maxIter;i++){
+//			vitesse = 40 - (40*i/maxIter);
+//			vitesseTry.setRayons(vitesse);
+//			vitesseTry.setPhi(vitesseLancer.phi);
+//			vitesseTry.setThetas(1.4);
+//			System.out.println("Vitesse :"+vitesse);
+////			System.out.println(vitesseTry.thetas);
+//			
+//			Balle balleTry = new Balle(new Vecteur(posTireur.x,posTireur.y,posTireur.z),vitesseTry);
+//			Vecteur posArrivee = new Vecteur();
+//			
+//			try{
+//				posArrivee = balleTry.lancer(1);
+//			}catch(RuntimeException e){
+//				//System.out.println(e);
+//				//vitesse *= 0.97;
+//				continue;
+//			}
+//			errLast = err;
+//			err = Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme();
+//			System.out.println("   Erreur" +Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme() );
+//			if(Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme() <= 0.1){
+//				System.out.println("Trouvée en :"+i+" iteration avec "+Vecteur.operation(posCible, posArrivee, Vecteur.OPE_MOINS).norme()+" d'erreur");
+//				break;
+//			}
+//			
+//		}
+//		
+//		
+//		return vitesseTry;
+//	}
 	
 	
 //	public static void main(String[] args){
@@ -407,15 +444,20 @@ public class LancerTrois {
 //		System.out.println("Vitesse : " + vinit.norme() + " Temps : " +time);
 //	}
 	public static void main(String[] args){
-		Vecteur posf = new Vecteur(0.1, 0.1, 0);
-		Vecteur posi = new Vecteur(4.1, 3 , 1.5);
+		Vecteur posf = new Vecteur(4, 2, 0);
+		Vecteur posi = new Vecteur(0, 4 , 1.5);
 		int murun = LancerTrois.MUR_SUD;
 		LancerTrois lancer = new LancerTrois(posi, murun, posf);
 		double phi = lancer.calculPhiTir();
 		double phidegre = phi*(180/(Math.PI));
-		System.out.println(phidegre);
+//		System.out.println(phidegre);
 		
+		long begin = System.currentTimeMillis();
 		Vecteur vitesse = LancerTrois.comboTry(posi,posf,murun);
+		long end = System.currentTimeMillis();
+		float time = ((float) (end-begin));
+		
+		System.out.println("Temps d'exec :"+time);
 		
 	}
 }
