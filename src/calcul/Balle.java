@@ -12,8 +12,8 @@ public class Balle extends PointMateriel {
 		  }
 	}
 	
-	class RebondMurError extends Exception {
-		public RebondMurError(String message)
+	class RebondPlafondError extends Exception {
+		public RebondPlafondError(String message)
 		  {
 		    super(message);
 		  }
@@ -48,7 +48,7 @@ public class Balle extends PointMateriel {
 		return deltaT;
 	}
 	
-	public Vecteur lancer(int nbre) throws TropDeRebondError, PasAssezDeRebondError, RebondMurError{
+	public Vecteur lancer(int nbre) throws TropDeRebondError, PasAssezDeRebondError, RebondPlafondError{
 		
 		this.nbrebond = 0;
 
@@ -89,7 +89,7 @@ public class Balle extends PointMateriel {
 		return this.position;
 	}
 	
-	public void rebond(int impact) throws RebondMurError{
+	public void rebond(int impact) throws RebondPlafondError{
 		/*
 		 * Gère les rebonds
 		 */
@@ -106,7 +106,7 @@ public class Balle extends PointMateriel {
 //			System.out.println("A touché le mur OUEST \n");
 			this.vitesse.setX(-this.vitesse.x);
 		}else if( impact == Espace.IMPACT_PLAFOND){
-			throw new RebondMurError("Pas encore prévus");
+			throw new RebondPlafondError("Pas encore prévus");
 		}
 		this.vitesse.pscalaire(1-COEFFICIENT_ABSORBTION); // Ici on ammorti la balle
 	}

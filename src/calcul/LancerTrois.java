@@ -1,7 +1,5 @@
 package calcul;
 
-import calcul.Balle.PasAssezDeRebondError;
-import calcul.Balle.RebondMurError;
 
 public class LancerTrois {
 	/*
@@ -280,7 +278,7 @@ public class LancerTrois {
 		final double k0 = 2*vMax/maxIter; // k0 pour la suite de kn (le pas)
 		
 		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
-		final double theTheta = 1.4 + Math.random()/5 - Math.random()/5 ; // Pour l'instant on fixe theta
+		final double theTheta = 1.35 + Math.random()/5 - Math.random()/12 ; // Pour l'instant on fixe theta
 		
 		System.out.println("Theta :"+theTheta);
 		
@@ -301,7 +299,7 @@ public class LancerTrois {
 				posTrouvee = balle.lancer(1);
 			}catch(Balle.TropDeRebondError e){
 //				System.out.println(e);
-				modif = k0 ;
+				modif = k0 *exceptLoop;
 				if(slow){
 					vitesse -= modif;
 				}else{
@@ -311,7 +309,7 @@ public class LancerTrois {
 				continue;
 			}catch(Balle.PasAssezDeRebondError e){
 //				System.out.println(e);
-				modif = k0;
+				modif = k0*exceptLoop;
 				if(slow){
 					vitesse -= modif;
 				}else{
@@ -319,14 +317,15 @@ public class LancerTrois {
 				}
 				exceptLoop += 1;
 				continue;
-			}catch(Balle.RebondMurError e){
+			}catch(Balle.RebondPlafondError e){
 //				System.out.println(e);
-				modif = k0 ;
+				modif = k0 *exceptLoop;
 				vitesse -= modif;
 				exceptLoop += 1;
 				continue;
 			}
-			if(errMin == 100){
+			
+			if(errMin == 100){ // Premier tour de boucle
 				err = Vecteur.operation(posCible, posTrouvee, Vecteur.OPE_MOINS).norme();
 				errMin = err;
 				vitesse -= k0;
@@ -444,8 +443,8 @@ public class LancerTrois {
 //		System.out.println("Vitesse : " + vinit.norme() + " Temps : " +time);
 //	}
 	public static void main(String[] args){
-		Vecteur posf = new Vecteur(4, 2, 0);
-		Vecteur posi = new Vecteur(0, 4 , 1.5);
+		Vecteur posf = new Vecteur(2, 9, 0);
+		Vecteur posi = new Vecteur(6, 0 , 1.5);
 		int murun = LancerTrois.MUR_SUD;
 		LancerTrois lancer = new LancerTrois(posi, murun, posf);
 		double phi = lancer.calculPhiTir();
