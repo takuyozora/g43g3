@@ -6,7 +6,7 @@ public class Balle extends PointMateriel {
 	 */
 	
 	private static double MASSE_OFFICIELLE = 0.024;
-	private static double GRANULARITE_TEMPS = 0.02;
+	private static double GRANULARITE_ESPACE = 0.01;
 	private static double COEFFICIENT_ABSORBTION = 0.45;
 	private static double COEFFICIENT_FROTTEMENT = 0.15;
 	
@@ -17,16 +17,20 @@ public class Balle extends PointMateriel {
 	}
 	
 	public Balle(Vecteur pinit, Vecteur vinit){
-		this.vitesse = vinit;
-		this.position = pinit;
+		this.vitesse = new Vecteur(vinit);
+		this.position = new Vecteur(pinit);
 		this.masse = MASSE_OFFICIELLE;
+	}
+	
+	public double getDeltaT(){
+		double deltaT = GRANULARITE_ESPACE / this.vitesse.norme();
+		return deltaT;
 	}
 	
 	public Vecteur lancer(int nbre){
 		
 		this.nbrebond = 0;
-		
-//		double time = 0;
+
 		int impact = Espace.PAS_IMPACT; 
 		while(impact != Espace.IMPACT_SOL){
 //			System.out.println(time+","+this.position.x+","+this.position.y+","+this.position.z);
@@ -35,27 +39,29 @@ public class Balle extends PointMateriel {
 				
 				this.nbrebond += 1;
 				
-				if (this.nbrebond > nbre){
-					
-					throw new RuntimeException("Trop de rebond");
-				}
+//				if (this.nbrebond > nbre){
+//					
+//					throw new RuntimeException("Trop de rebond");
+//				}
 								
 					this.rebond(impact);
 			}
 			
-			this.subirForce(Vecteur.pscalaire(Espace.GRAVITE, this.masse), GRANULARITE_TEMPS);
-			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT), GRANULARITE_TEMPS);
-			this.continuerMouvement(GRANULARITE_TEMPS);
+			this.subirForce(Vecteur.pscalaire(Espace.GRAVITE, this.masse), this.getDeltaT());
+			//this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT), GRANULARITE_TEMPS);
+			this.continuerMouvement(this.getDeltaT());
 			impact = Espace.impact(this.position);
 			
 		}
-		if (this.nbrebond < nbre){
-			
-			throw new RuntimeException("Pas assez de rebond");
+//		if (this.nbrebond < nbre){
+//			
+//			throw new RuntimeException("Pas assez de rebond");
+//		}
+//		
+//		System.out.println("X: " + this.position.x + " , Y: " + this.position.y + " , Z: " + this.position.z + "\n");
+		if(nbrebond != nbre){
+			throw new RuntimeException("Trop ou pas assez de rebond");
 		}
-		
-		System.out.println("X: " + this.position.x + " , Y: " + this.position.y + " , Z: " + this.position.z + "\n");
-		
 		return this.position;
 	}
 	

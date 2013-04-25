@@ -41,6 +41,13 @@ public class Vecteur {
 		this.updateAll(TYPE_CARTESIEN);
 	}
 	
+	public Vecteur(Vecteur vect){
+		this.x = vect.x;
+		this.y = vect.y;
+		this.z = vect.z;
+		this.updateAll(TYPE_CARTESIEN);
+	}
+	
 	/* (inutile) public double norme(double x , double y , double z){
 		norme = Math.sqrt(x*x+y*y+z*z) ;
 		return norme ;
