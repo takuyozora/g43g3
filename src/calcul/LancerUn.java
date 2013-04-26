@@ -392,7 +392,7 @@ public class LancerUn {
 	public static void main(String[] args){
 		Vecteur posf = new Vecteur(4, 9, 0);
 		Vecteur posi = new Vecteur(6, 3 , 1.5);
-		int murun = LancerUn.MUR_SUD;
+		int murun = LancerUn.MUR_EST;
 		LancerUn lancer = new LancerUn(posi, murun, posf);
 		
 //		double phi = lancer.calculPhiTirTrois();

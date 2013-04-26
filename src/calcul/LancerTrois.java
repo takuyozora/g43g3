@@ -360,7 +360,7 @@ public class LancerTrois {
 				vitesse -= modif;
 			}
 			
-			if(err < 0.08){
+			if(err < 0.06){
 				System.out.println("Touvé !! en "+n+" iterations !");
 				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
 				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
