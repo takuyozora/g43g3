@@ -3,9 +3,8 @@ package calcul;
 
 public class LancerTrois {
 	/*
-	 * LancerTrois est la classe qui permet de trouver les paramètres de tirs avec comme 
-	 * paramètres d'entrée une puissance (faible, moyen, fort, très fort) donc une fourchette
-	 * de vitesse, le mur du rebond, la cible au sol et la position du lanceur
+	 * LancerTrois est la classe qui permet de trouver les paramètres de tirs (angles et vitesses) avec comme 
+	 * paramètres d'entrée le mur du rebond, la cible au sol et la position du lanceur.
 	 */
 	
 	static final int MUR_NORD = 10 ;
@@ -26,51 +25,51 @@ public class LancerTrois {
 		
 	}
 		
-	private static double[] calculFourchette(Vecteur posinitiale, int murmur){
+	private static double[] calculFourchetteTrois(Vecteur posinitiale, int murmur){
 		double[]result = {0,0,0,0};
 			
 		if (murmur == LancerTrois.MUR_NORD){
 			
-			double phimin = Vecteur.fractionPi(1,2) - Math.atan((Espace.LARGEUR - posinitiale.x)/(Espace.PROFONDEUR - posinitiale.y));
-			double phimax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.x)/(Espace.PROFONDEUR - posinitiale.y));
+//			double phimin = Vecteur.fractionPi(1,2) - Math.atan((Espace.LARGEUR - posinitiale.x)/(Espace.PROFONDEUR - posinitiale.y));
+//			double phimax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.x)/(Espace.PROFONDEUR - posinitiale.y));
 			double thetamin = Vecteur.fractionPi(1,2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(Espace.PROFONDEUR - posinitiale.y));
 			double thetamax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.z)/(Espace.PROFONDEUR - posinitiale.y));
 			
-			result[0] = phimin;
-			result[1] = phimax;
+//			result[0] = phimin;
+//			result[1] = phimax;
 			result[2] = thetamin;
 			result[3] = thetamax;
 		}else if (murmur == LancerTrois.MUR_SUD){
 			
-			double phimin = Vecteur.fractionPi(3, 2) - Math.atan((posinitiale.x)/(posinitiale.y));
-			double phimax = Vecteur.fractionPi(3, 2) + Math.atan((Espace.LARGEUR - posinitiale.x)/(posinitiale.y));
+//			double phimin = Vecteur.fractionPi(3, 2) - Math.atan((posinitiale.x)/(posinitiale.y));
+//			double phimax = Vecteur.fractionPi(3, 2) + Math.atan((Espace.LARGEUR - posinitiale.x)/(posinitiale.y));
 			double thetamin = Vecteur.fractionPi(1, 2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(posinitiale.y));
 			double thetamax = Vecteur.fractionPi(1, 2) + Math.atan((posinitiale.z)/(posinitiale.y));
 
-			result[0] = phimin;
-			result[1] = phimax;
+//			result[0] = phimin;
+//			result[1] = phimax;
 			result[2] = thetamin;
 			result[3] = thetamax;
 		}else if (murmur == LancerTrois.MUR_EST){
 
-			double phimin = - Math.atan((posinitiale.y)/(Espace.LARGEUR - posinitiale.x));
-			double phimax = Math.atan((Espace.PROFONDEUR - posinitiale.y)/(Espace.LARGEUR - posinitiale.x));
+//			double phimin = - Math.atan((posinitiale.y)/(Espace.LARGEUR - posinitiale.x));
+//			double phimax = Math.atan((Espace.PROFONDEUR - posinitiale.y)/(Espace.LARGEUR - posinitiale.x));
 			double thetamin = Vecteur.fractionPi(1,2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(Espace.LARGEUR - posinitiale.x));
 			double thetamax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.z)/(Espace.LARGEUR - posinitiale.x));
 			
-			result[0] = phimin;
-			result[1] = phimax;
+//			result[0] = phimin;
+//			result[1] = phimax;
 			result[2] = thetamin;
 			result[3] = thetamax;
 		}else if (murmur == LancerTrois.MUR_OUEST){
 			
-			double phimin = Vecteur.fractionPi(1, 1) - Math.atan((Espace.PROFONDEUR - posinitiale.y)/(posinitiale.x));
-			double phimax = Vecteur.fractionPi(1, 1) + Math.atan((posinitiale.y)/(posinitiale.x));
+//			double phimin = Vecteur.fractionPi(1, 1) - Math.atan((Espace.PROFONDEUR - posinitiale.y)/(posinitiale.x));
+//			double phimax = Vecteur.fractionPi(1, 1) + Math.atan((posinitiale.y)/(posinitiale.x));
 			double thetamin = Vecteur.fractionPi(1,2) - Math.atan((Espace.HAUTEUR_HAUTE - posinitiale.z)/(posinitiale.x));
 			double thetamax = Vecteur.fractionPi(1,2) + Math.atan((posinitiale.z)/(posinitiale.x));
 
-			result[0] = phimin;
-			result[1] = phimax;
+//			result[0] = phimin;
+//			result[1] = phimax;
 			result[2] = thetamin;
 			result[3] = thetamax;
 		}else{
@@ -81,9 +80,11 @@ public class LancerTrois {
 		return result;
 		
 	}
-//	
+	
+//	Ancienne méthode: A supprimer dans le futur
+	
 //	public Vecteur tir(){
-//		double[]fourchette = calculFourchette(this.posinit, this.mur);
+//		double[]fourchette = calculFourchetteTrois(this.posinit, this.mur);
 //		
 //		int count = 0;
 //		
@@ -120,46 +121,50 @@ public class LancerTrois {
 //		
 //	}
 	
-	public double calculPhiTir(){
-		if (this.mur == MUR_OUEST){
-			phitir =  Vecteur.fractionPi(1, 1) - Math.atan((this.cible.y - this.posinit.y)/(this.cible.x + this.posinit.x));
-		}
-		else if(this.mur == MUR_NORD){
-			phitir = Vecteur.fractionPi(1, 2) - Math.atan((this.cible.x - this.posinit.x)/(2*Espace.PROFONDEUR - this.cible.y - this.posinit.y));
-		}
-		else if(this.mur == MUR_EST){
-			phitir = -Math.atan((this.posinit.y - this.cible.y)/(2*Espace.LARGEUR -this.cible.x - this.posinit.x)); 
-		}
-		else if(this.mur == MUR_SUD){
-			phitir = Vecteur.fractionPi(3, 2) - Math.atan((this.posinit.x - this.cible.x)/(this.cible.y + this.posinit.y));
-		}
-		return phitir;
-	}
+//	Ancienne méthode: A supprimer dans le futur
+
+//	public double calculPhiTir(){
+//		if (this.mur == MUR_OUEST){
+//			phitir =  Vecteur.fractionPi(1, 1) - Math.atan((this.cible.y - this.posinit.y)/(this.cible.x + this.posinit.x));
+//		}
+//		else if(this.mur == MUR_NORD){
+//			phitir = Vecteur.fractionPi(1, 2) - Math.atan((this.cible.x - this.posinit.x)/(2*Espace.PROFONDEUR - this.cible.y - this.posinit.y));
+//		}
+//		else if(this.mur == MUR_EST){
+//			phitir = -Math.atan((this.posinit.y - this.cible.y)/(2*Espace.LARGEUR -this.cible.x - this.posinit.x)); 
+//		}
+//		else if(this.mur == MUR_SUD){
+//			phitir = Vecteur.fractionPi(3, 2) - Math.atan((this.posinit.x - this.cible.x)/(this.cible.y + this.posinit.y));
+//		}
+//		return phitir;
+//	}
 	
-	public static double calculPhiTir(Vecteur posTireur, Vecteur posCible, int murCible){
+	public static double calculPhiTirTrois(Vecteur posTireur, Vecteur posCible, int murTroisCible){
 		double phi = 0;
-		if (murCible == MUR_OUEST){
+		if (murTroisCible == LancerTrois.MUR_OUEST){
 			phi =  Vecteur.fractionPi(1, 1) - Math.atan((posCible.y - posTireur.y)/(posCible.x + posTireur.x));
 		}
-		else if(murCible == MUR_NORD){
+		else if(murTroisCible == LancerTrois.MUR_NORD){
 			phi = Vecteur.fractionPi(1, 2) - Math.atan((posCible.x - posTireur.x)/(2*Espace.PROFONDEUR - posCible.y - posTireur.y));
 		}
-		else if(murCible == MUR_EST){
+		else if(murTroisCible == LancerTrois.MUR_EST){
 			phi = -Math.atan((posTireur.y - posCible.y)/(2*Espace.LARGEUR -posCible.x - posTireur.x)); 
 		}
-		else if(murCible == MUR_SUD){
+		else if(murTroisCible == LancerTrois.MUR_SUD){
 			phi = Vecteur.fractionPi(3, 2) - Math.atan((posTireur.x - posCible.x)/(posCible.y + posTireur.y));
 		}
 		return phi;
 	}
 	
-//	public static Vecteur multiTry(Vecteur posTireur, Vecteur posCible, int murCible){
+//	Ancienne méthode : A supprimer dans le futur
+//	
+//	public static Vecteur multiTryTrois(Vecteur posTireur, Vecteur posCible, int murCible){
 //		Vecteur vitesseTry = new Vecteur();
 //		
 //		Vecteur vitesseLancer = new Vecteur();
-//		vitesseLancer.setPhi(LancerTrois.calculPhiTir(posTireur, posCible, murCible));
+//		vitesseLancer.setPhi(LancerTrois.calculPhiTirTrois(posTireur, posCible, murCible));
 //		
-//		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
+//		double[] fourchette = LancerTrois.calculFourchetteTrois(posTireur, murCible);
 //		
 //		double vmax = 40;
 //		double ecartMax = 0;
@@ -257,12 +262,12 @@ public class LancerTrois {
 //		return vitesseTry;
 //	}
 	
-	public static Vecteur comboTry(Vecteur posTireur, Vecteur posCible, int murCible){
+	public static Vecteur comboTryTrois(Vecteur posTireur, Vecteur posCible, int murCible){
 		Vecteur bestTry = new Vecteur();
 		Vecteur vitesseTry = new Vecteur();
 		
-		Vecteur vitesseLancer = new Vecteur();
-		double thePhi = LancerTrois.calculPhiTir(posTireur, posCible, murCible);
+		Vecteur vitesseLancer = new Vecteur(); // N'est pas utiliser, à supprimer dans le futur
+		double thePhi = LancerTrois.calculPhiTirTrois(posTireur, posCible, murCible);
 		
 		double errMin = 100; // Pour etre sur que la première valeur ne soit pas interprété
 		double errLast = 0;
@@ -277,7 +282,7 @@ public class LancerTrois {
 		final int maxIter = 2000;
 		final double k0 = 2*vMax/maxIter; // k0 pour la suite de kn (le pas)
 		
-		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
+		double[] fourchette = LancerTrois.calculFourchetteTrois(posTireur, murCible);
 		final double theTheta = 1.35 + Math.random()/5 - Math.random()/12 ; // Pour l'instant on fixe theta
 		
 		System.out.println("Theta :"+theTheta);
@@ -356,9 +361,9 @@ public class LancerTrois {
 			}
 			
 			if(err < 0.08){
-				System.out.println("Touvée !! en "+n+"itteration !");
+				System.out.println("Touvé !! en "+n+" iterations !");
 				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
-				System.out.println("Trouv:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
+				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
 				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
 				return vitesseTry;
 			}else if (n%50 == 0){
@@ -370,24 +375,25 @@ public class LancerTrois {
 				
 				
 		}
-		System.out.println("Meilleur résultat en "+maxIter+"itteration !");
+		System.out.println("Meilleur résultat en "+maxIter+" iterations !");
 		System.out.println(" --> Erreur :"+errMin*100 +" cm");
 		System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
-		System.out.println("Trouv:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
+		System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
 		System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
 		return bestTry;
 	
 		
 	}
 	
+//	Ancienne méthode : A supprimer dans le futur
 	
 //	public static Vecteur Try(Vecteur posTireur, Vecteur posCible, int murCible){
 //		Vecteur vitesseTry = new Vecteur();
 //		
 //		Vecteur vitesseLancer = new Vecteur();
-//		vitesseLancer.setPhi(LancerTrois.calculPhiTir(posTireur, posCible, murCible));
+//		vitesseLancer.setPhi(LancerTrois.calculPhiTirTrois(posTireur, posCible, murCible));
 //		
-//		double[] fourchette = LancerTrois.calculFourchette(posTireur, murCible);
+//		double[] fourchette = LancerTrois.calculFourchetteTrois(posTireur, murCible);
 //		
 //
 //		
@@ -430,7 +436,7 @@ public class LancerTrois {
 //		return vitesseTry;
 //	}
 	
-	
+		
 //	public static void main(String[] args){
 //		Vecteur posi = new Vecteur(2, 2 , 1.5);
 //		int murun = LancerTrois.MUR_SUD;
@@ -442,17 +448,19 @@ public class LancerTrois {
 //		float time = ((float) (end-begin));
 //		System.out.println("Vitesse : " + vinit.norme() + " Temps : " +time);
 //	}
+	
 	public static void main(String[] args){
 		Vecteur posf = new Vecteur(2, 9, 0);
 		Vecteur posi = new Vecteur(6, 0 , 1.5);
 		int murun = LancerTrois.MUR_SUD;
 		LancerTrois lancer = new LancerTrois(posi, murun, posf);
-		double phi = lancer.calculPhiTir();
-		double phidegre = phi*(180/(Math.PI));
+		
+//		double phi = lancer.calculPhiTirTrois();
+//		double phidegre = phi*(180/(Math.PI));
 //		System.out.println(phidegre);
 		
 		long begin = System.currentTimeMillis();
-		Vecteur vitesse = LancerTrois.comboTry(posi,posf,murun);
+		Vecteur vitesse = LancerTrois.comboTryTrois(posi,posf,murun);
 		long end = System.currentTimeMillis();
 		float time = ((float) (end-begin));
 		
