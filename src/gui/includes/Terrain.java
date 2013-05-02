@@ -8,6 +8,7 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
+import javax.media.opengl.glu.GLUquadric;
 
 import static javax.media.opengl.GL.*;
 import static javax.media.opengl.GL2.*;
@@ -131,6 +132,56 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
       gl.glEnd(); // Fin de dessin
       
       angleCube += speedCube; // Incrémentation angle de rotation du terrain (utile en test uniquement).
+      
+      // Contours du terrain
+      gl.glLineWidth(2);
+      gl.glBegin(GL_LINES);
+      gl.glColor4ub((byte)0,(byte)0,(byte)0, (byte)255);
+      
+      gl.glVertex3d(0, 0, 0);
+      gl.glVertex3d(0, 5.640, 0);
+      
+      gl.glVertex3d(0, 0, 9.750);
+      gl.glVertex3d(0, 5.640, 9.750);
+      
+      gl.glVertex3d(6.400, 0, 0);
+      gl.glVertex3d(6.400, 5.640, 0);
+      
+      gl.glVertex3d(6.400, 0, 9.750);
+      gl.glVertex3d(6.400, 5.640, 9.750);
+      
+      gl.glVertex3d(0, 0, 0);
+      gl.glVertex3d(0, 0, 9.750);
+      
+      gl.glVertex3d(0, 5.640, 0);
+      gl.glVertex3d(0, 5.640, 9.750);
+      
+      gl.glVertex3d(6.400, 0, 0);
+      gl.glVertex3d(6.400, 0, 9.750);
+      
+      gl.glVertex3d(6.400, 5.640, 0);
+      gl.glVertex3d(6.400, 5.640, 9.750);
+      
+      gl.glVertex3d(0, 5.640, 9.750);
+      gl.glVertex3d(6.400, 5.640, 9.750);
+      
+      gl.glVertex3d(0, 0, 9.750);
+      gl.glVertex3d(6.400, 0, 9.750);
+      
+      gl.glVertex3d(0, 5.640, 0);
+      gl.glVertex3d(6.400, 5.640, 0);
+      
+      gl.glVertex3d(0, 0, 0);
+      gl.glVertex3d(6.400, 0, 0);
+      
+      gl.glEnd();
+      
+      gl.glTranslated(3, 3, 10.750);
+      
+      // Balle de Squash
+      GLUquadric sphere = glu.gluNewQuadric();
+      glu.gluSphere(sphere, 0.04, 20, 20);
+      glu.gluDeleteQuadric(sphere);
    }
  
    @Override
