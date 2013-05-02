@@ -1,5 +1,8 @@
 package gui.includes;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -11,7 +14,7 @@ import static javax.media.opengl.GL2.*;
  
 
 @SuppressWarnings("serial")
-public class Terrain extends GLJPanel implements GLEventListener {
+public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
  
    private GLU glu;
    
@@ -21,11 +24,20 @@ public class Terrain extends GLJPanel implements GLEventListener {
    private byte b = (byte)0;
    private byte alpha = (byte)155; // Transparence du terrain
    
+   // Paramètres de rotation de la camera
+   private double rotation_x = 10; // Angle de 10 par défaut
+   private double rotation_y = 0;
+   private double r_factor = 1;
+   
+   // Paramètres pour tourner le terrain en mode automatique (Test uniquement)
    private float angleCube = 0;
    private float speedCube = -1.5f;
    
    public Terrain() {
-      this.addGLEventListener(this);
+	   this.addGLEventListener(this);
+	   this.addKeyListener(this);
+	   this.setFocusable(true);
+	   this.requestFocusInWindow();
    }
  
    
@@ -75,7 +87,10 @@ public class Terrain extends GLJPanel implements GLEventListener {
       gl.glLoadIdentity();
  
       gl.glTranslated(-3.2, -2.82, -30); // Placement au centre du terrain
-    //  gl.glRotated(30,1,1,1);
+      
+      // Rotation de la caméra
+      gl.glRotated(rotation_x,1,0,0);
+      gl.glRotated(rotation_y,0,1,0);
       
       
     //  gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
@@ -120,4 +135,33 @@ public class Terrain extends GLJPanel implements GLEventListener {
  
    @Override
    public void dispose(GLAutoDrawable drawable) { }
+   
+   public void keyTyped(KeyEvent key)
+   {
+	   // Rien à faire (pour le moment).
+   }
+   
+   public void keyPressed(KeyEvent key)
+   {
+     if(key.getKeyCode() == KeyEvent.VK_UP) {
+    	 rotation_x=rotation_x+r_factor;
+     }
+     if(key.getKeyCode() == KeyEvent.VK_DOWN) {
+    	 rotation_x=rotation_x-r_factor;
+     }
+     if(key.getKeyCode() == KeyEvent.VK_LEFT) {
+    	 rotation_y=rotation_y-r_factor;
+     }
+     if(key.getKeyCode() == KeyEvent.VK_RIGHT) {
+    	 rotation_y=rotation_y+r_factor;
+     }
+     if(key.getKeyCode() == KeyEvent.VK_ESCAPE) {
+         System.exit(0);
+       }
+   }
+
+   public void keyReleased(KeyEvent key)
+   {
+	 // Rien à faire (pour le moment) 
+   }
 }
