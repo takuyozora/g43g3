@@ -16,9 +16,9 @@ public class Terrain extends GLJPanel implements GLEventListener {
    private GLU glu;
    
    // Couleurs R,G,B du terrain
-   private byte r = (byte)255;
-   private byte g = (byte)255;
-   private byte b = (byte)255;
+   private byte r = (byte)0;
+   private byte g = (byte)0;
+   private byte b = (byte)0;
    private byte alpha = (byte)155; // Transparence du terrain
    
    private float angleCube = 0;
