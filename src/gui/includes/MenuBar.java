@@ -1,22 +1,25 @@
 package gui.includes;
 
+import gui.MainWindow;
+import gui.includes.Add.*;
+import gui.includes.Favoris.*;
+import gui.includes.Reglages.*;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Image;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class MenuBar extends JPanel {
-
+	
 	String resPath = "./src/gui/res/"; // Path to resources
+	private int lastclicked = 0;
 	
 	/* MenuBar buttons definition w/ icon */
 	ImageIcon addIcon = new ImageIcon(resPath+"add.png");
@@ -29,15 +32,73 @@ public class MenuBar extends JPanel {
 	JButton settingsButton = new JButton("Paramètres", settingsIcon);
 
 	public MenuBar() {
-		this.setLayout(new FlowLayout());
-		
+		this.setSize(700, 300); // Not working ...
 		this.add(addButton);
 		this.add(favsButton);
 		this.add(settingsButton);
-		this.setBackground(Color.BLACK);
+		this.setBackground(Color.WHITE);
+		
+		addButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				addButtonPressed();
+			} 
+		});
+		favsButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				favsButtonPressed();
+			} 
+		});
+		settingsButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				settingsButtonPressed();
+			} 
+		});
 	}
 	
+	public void addButtonPressed() {
+		if(lastclicked == 0) {
+			MainWindow.fenetre.remove(MainWindow.content);
+		}
+		else if(lastclicked == 2) {
+			MainWindow.fenetre.remove(Favoris.panel);
+		}
+		else if(lastclicked == 3) {
+			MainWindow.fenetre.remove(Reglages.panel);
+		}
+		MainWindow.fenetre.add(AddStep1.panel, MainWindow.layout.CENTER);
+		MainWindow.fenetre.reload();
+		lastclicked = 1;
+	}
 	
+	public void favsButtonPressed() {
+		if(lastclicked == 0) {
+			MainWindow.fenetre.remove(MainWindow.content);
+		}
+		else if(lastclicked == 1) {
+			MainWindow.fenetre.remove(AddStep1.panel);
+		}
+		else if(lastclicked == 3) {
+			MainWindow.fenetre.remove(Reglages.panel);
+		}
+		MainWindow.fenetre.add(Favoris.panel, MainWindow.layout.CENTER);
+		MainWindow.fenetre.reload();
+		lastclicked = 2;
+	}
+	
+	public void settingsButtonPressed() {
+		if(lastclicked == 0) {
+			MainWindow.fenetre.remove(MainWindow.content);
+		}
+		else if(lastclicked == 1) {
+			MainWindow.fenetre.remove(AddStep1.panel);
+		}
+		else if(lastclicked == 2) {
+			MainWindow.fenetre.remove(Favoris.panel);
+		}
+		MainWindow.fenetre.add(Reglages.panel, MainWindow.layout.CENTER);
+		MainWindow.fenetre.reload();
+		lastclicked = 3;
+	}
 	
 }
 	
