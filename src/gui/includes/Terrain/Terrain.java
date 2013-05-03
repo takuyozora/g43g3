@@ -54,7 +54,6 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
    public void init(GLAutoDrawable drawable) {
       GL2 gl = drawable.getGL().getGL2();
       glu = new GLU();
-      gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
       gl.glClearDepth(1.0f);
       gl.glEnable(GL_DEPTH_TEST);
       gl.glEnable(GL_BLEND); // Active le mode BLEND
@@ -88,7 +87,7 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
    @Override
    public void display(GLAutoDrawable drawable) {
       GL2 gl = drawable.getGL().getGL2();
-      gl.glClearColor(0.95f, 0.95f, 0.95f, 1.0f);
+      gl.glClearColor(0.929f, 0.929f, 0.929f, 1.0f);
       gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       gl.glLoadIdentity();
  
@@ -99,7 +98,7 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
       gl.glRotated(rotation_y,0,1,0);
       
       
-      gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
+   //   gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
       
       gl.glBegin(GL_QUADS); // DŽbut de dessin du terrain
       gl.glColor4ub(r,g,b, alpha);
