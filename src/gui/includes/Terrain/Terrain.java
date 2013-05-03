@@ -10,6 +10,8 @@ import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.glu.GLU;
 import javax.media.opengl.glu.GLUquadric;
 
+import com.jogamp.opengl.util.FPSAnimator;
+
 import static javax.media.opengl.GL.*;
 import static javax.media.opengl.GL2.*;
  
@@ -20,9 +22,9 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
    private GLU glu;
    
    // Couleurs R,G,B du terrain
-   private byte r = (byte)0;
-   private byte g = (byte)0;
-   private byte b = (byte)0;
+   private byte r = (byte)50;
+   private byte g = (byte)50;
+   private byte b = (byte)50;
    private byte alpha = (byte)155; // Transparence du terrain
    
    // Paramètres de rotation de la camera
@@ -33,6 +35,9 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
    // Paramètres pour tourner le terrain en mode automatique (Test uniquement)
    private float angleCube = 0;
    private float speedCube = -1.5f;
+   
+   public static Terrain terrain = new Terrain();
+   public static FPSAnimator animator = new FPSAnimator(terrain, 60, true);
    
    public Terrain() {
 	   this.addGLEventListener(this);
@@ -87,14 +92,14 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
       gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       gl.glLoadIdentity();
  
-      gl.glTranslated(-3.2, -2.82, -30); // Placement au centre du terrain
+      gl.glTranslated(-3.2, -2.82, -20); // Placement au centre du terrain
       
       // Rotation de la caméra
       gl.glRotated(rotation_x,1,0,0);
       gl.glRotated(rotation_y,0,1,0);
       
       
-    //  gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
+      gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
       
       gl.glBegin(GL_QUADS); // Début de dessin du terrain
       gl.glColor4ub(r,g,b, alpha);
