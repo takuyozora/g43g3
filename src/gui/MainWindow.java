@@ -2,7 +2,10 @@ package gui;
 
 import gui.includes.Content;
 import gui.includes.MenuBar;
+import gui.includes.Terrain.Terrain;
+
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -28,14 +31,19 @@ public class MainWindow extends JFrame {
 		
 		this.add(menuBar, layout.NORTH);
 		this.add(content, layout.CENTER);
-		reload();
+		this.validate();
+		this.repaint();
 	}
 	
 	public static void main(String[] args) {
 		fenetre = new MainWindow();
+		Terrain.animator.start();
 	}
 	
-	public void reload() {
+	public void buildWindow(Component component) {
+		this.getContentPane().removeAll();
+		this.add(menuBar, layout.NORTH);
+		this.add(component, layout.CENTER);
 		this.validate();
 		this.repaint();
 	}

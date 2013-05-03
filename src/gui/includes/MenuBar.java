@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 public class MenuBar extends JPanel {
 	
 	String resPath = "./src/gui/res/"; // Path to resources
-	private int lastclicked = 0;
 	
 	/* MenuBar buttons definition w/ icon */
 	ImageIcon addIcon = new ImageIcon(resPath+"add.png");
@@ -56,48 +55,15 @@ public class MenuBar extends JPanel {
 	}
 	
 	public void addButtonPressed() {
-		if(lastclicked == 0) {
-			MainWindow.fenetre.remove(MainWindow.content);
-		}
-		else if(lastclicked == 2) {
-			MainWindow.fenetre.remove(Favoris.panel);
-		}
-		else if(lastclicked == 3) {
-			MainWindow.fenetre.remove(Reglages.panel);
-		}
-		MainWindow.fenetre.add(AddStep1.panel, MainWindow.layout.CENTER);
-		MainWindow.fenetre.reload();
-		lastclicked = 1;
+		MainWindow.fenetre.buildWindow(AddStep1.panel);
 	}
 	
 	public void favsButtonPressed() {
-		if(lastclicked == 0) {
-			MainWindow.fenetre.remove(MainWindow.content);
-		}
-		else if(lastclicked == 1) {
-			MainWindow.fenetre.remove(AddStep1.panel);
-		}
-		else if(lastclicked == 3) {
-			MainWindow.fenetre.remove(Reglages.panel);
-		}
-		MainWindow.fenetre.add(Favoris.panel, MainWindow.layout.CENTER);
-		MainWindow.fenetre.reload();
-		lastclicked = 2;
+		MainWindow.fenetre.buildWindow(Favoris.panel);
 	}
 	
 	public void settingsButtonPressed() {
-		if(lastclicked == 0) {
-			MainWindow.fenetre.remove(MainWindow.content);
-		}
-		else if(lastclicked == 1) {
-			MainWindow.fenetre.remove(AddStep1.panel);
-		}
-		else if(lastclicked == 2) {
-			MainWindow.fenetre.remove(Favoris.panel);
-		}
-		MainWindow.fenetre.add(Reglages.panel, MainWindow.layout.CENTER);
-		MainWindow.fenetre.reload();
-		lastclicked = 3;
+		MainWindow.fenetre.buildWindow(Reglages.panel);
 	}
 	
 }
