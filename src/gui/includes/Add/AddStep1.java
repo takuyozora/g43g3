@@ -35,5 +35,6 @@ public class AddStep1 extends JPanel {
 	
 	public void voirterrainPressed() {
 		MainWindow.fenetre.buildWindow(Terrain.terrain);
+		Terrain.terrain.requestFocusInWindow();
 	}
 }

@@ -43,7 +43,6 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener {
 	   this.addGLEventListener(this);
 	   this.addKeyListener(this);
 	   this.setFocusable(true);
-	   this.requestFocusInWindow();
    }
  
    
