@@ -1,21 +1,23 @@
 package gui.includes;
 
+import gui.MainWindow;
+import gui.includes.Add.*;
+import gui.includes.Favoris.*;
+import gui.includes.Reglages.*;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Image;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class MenuBar extends JPanel {
-
+	
 	String resPath = "./src/gui/res/"; // Path to resources
 	
 	/* MenuBar buttons definition w/ icon */
@@ -29,15 +31,40 @@ public class MenuBar extends JPanel {
 	JButton settingsButton = new JButton("Paramètres", settingsIcon);
 
 	public MenuBar() {
-		this.setLayout(new FlowLayout());
-		
+		this.setSize(700, 300); // Not working ...
 		this.add(addButton);
 		this.add(favsButton);
 		this.add(settingsButton);
-		this.setBackground(Color.BLACK);
+		this.setBackground(Color.WHITE);
+		
+		addButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				addButtonPressed();
+			} 
+		});
+		favsButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				favsButtonPressed();
+			} 
+		});
+		settingsButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				settingsButtonPressed();
+			} 
+		});
 	}
 	
+	public void addButtonPressed() {
+		MainWindow.fenetre.buildWindow(AddStep1.panel);
+	}
 	
+	public void favsButtonPressed() {
+		MainWindow.fenetre.buildWindow(Favoris.panel);
+	}
+	
+	public void settingsButtonPressed() {
+		MainWindow.fenetre.buildWindow(Reglages.panel);
+	}
 	
 }
 	

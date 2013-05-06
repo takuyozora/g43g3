@@ -2,15 +2,22 @@ package gui;
 
 import gui.includes.Content;
 import gui.includes.MenuBar;
+import gui.includes.Terrain.Terrain;
+
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 
 public class MainWindow extends JFrame {
 	
 	public MenuBar menuBar = new MenuBar();
-	public Content content = new Content();
+	public static Content content = new Content();
+	public static MainWindow fenetre;
+	public static final String testString = "Mon string";
+	public static BorderLayout layout = new BorderLayout();
 	
 	public MainWindow() {
 		super("Squash Pro");
@@ -18,17 +25,27 @@ public class MainWindow extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.setLayout(new BorderLayout());
+		this.setMinimumSize(new Dimension(500, 500));
+		this.setLayout(layout);
 		// this.setResizable(false);
 		
-		this.add(menuBar, BorderLayout.NORTH);
-		this.add(content, BorderLayout.CENTER);
+		this.add(menuBar, layout.NORTH);
+		this.add(content, layout.CENTER);
 		this.validate();
 		this.repaint();
 	}
 	
 	public static void main(String[] args) {
-		MainWindow fenetre = new MainWindow();
+		fenetre = new MainWindow();
+		Terrain.animator.start();
+	}
+	
+	public void buildWindow(Component component) {
+		this.getContentPane().removeAll();
+		this.add(menuBar, layout.NORTH);
+		this.add(component, layout.CENTER);
+		this.validate();
+		this.repaint();
 	}
 
 }
