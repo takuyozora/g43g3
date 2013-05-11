@@ -262,7 +262,9 @@ public class LancerTrois {
 //		return vitesseTry;
 //	}
 	
-	public static Vecteur comboTryTrois(Vecteur posTireur, Vecteur posCible, int murCible){
+	public static Vecteur lancer(Vecteur posTireur, Vecteur posCible, int murCible){
+		boolean DEBUG = true;
+		
 		Vecteur bestTry = new Vecteur();
 		Vecteur vitesseTry = new Vecteur();
 		
@@ -280,7 +282,7 @@ public class LancerTrois {
 		
 		final double vMax = 40;
 		final int maxIter = 2000;
-		final double k0 = 2*vMax/maxIter; // k0 pour la suite de kn (le pas)
+		final double k0 = 5*vMax/maxIter; // k0 pour la suite de kn (le pas)
 		
 		double[] fourchette = LancerTrois.calculFourchetteTrois(posTireur, murCible);
 		final double theTheta = 1.35 + Math.random()/5 - Math.random()/12 ; // Pour l'instant on fixe theta
@@ -298,6 +300,9 @@ public class LancerTrois {
 		long begin = System.currentTimeMillis();
 		
 		for(double n=1;n<maxIter;n++){
+			if(DEBUG){
+				System.out.println(err);
+			}
 			vitesseTry.setRayons(vitesse);
 			Balle balle = new Balle(posTireur,vitesseTry);
 			try{
@@ -305,17 +310,18 @@ public class LancerTrois {
 			}catch(Balle.TropDeRebondError e){
 //				System.out.println(e);
 				modif = k0 *exceptLoop;
-				if(slow){
-					vitesse -= modif;
-				}else{
-					vitesse += modif;
-				}
+//				if(!slow){
+//					vitesse -= modif;
+//				}else{
+//					vitesse += modif;
+//				}
+				vitesse -= modif * 5;
 				exceptLoop += 1;
 				continue;
 			}catch(Balle.PasAssezDeRebondError e){
 //				System.out.println(e);
 				modif = k0*exceptLoop;
-				if(slow){
+				if(!slow){
 					vitesse -= modif;
 				}else{
 					vitesse += modif;
@@ -348,7 +354,7 @@ public class LancerTrois {
 				if (slow){
 					modif *= -1;
 				}
-				vitesse -= modif;
+				vitesse += modif;
 				aLaSuite += 1;
 			}else{
 				aLaSuite = 1;
@@ -357,7 +363,7 @@ public class LancerTrois {
 				if (slow){
 					modif *= -1;
 				}
-				vitesse -= modif;
+				vitesse += modif;
 			}
 			
 			if(err < 0.08){
@@ -460,7 +466,7 @@ public class LancerTrois {
 //		System.out.println(phidegre);
 		
 		long begin = System.currentTimeMillis();
-		Vecteur vitesse = LancerTrois.comboTryTrois(posi,posf,murun);
+		Vecteur vitesse = LancerTrois.lancer(posi,posf,murun);
 		long end = System.currentTimeMillis();
 		float time = ((float) (end-begin));
 		
