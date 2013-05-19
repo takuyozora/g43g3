@@ -10,16 +10,16 @@ public class Database
 {
   public static void main(String[] args) throws ClassNotFoundException
   {
-    // load the sqlite-JDBC driver using the current class loader
+	// Chargement du driver JDBC
     Class.forName("org.sqlite.JDBC");
 
     Connection connection = null;
     try
     {
-      // create a database connection
+      // Connexion à la base de données des programmes
       connection = DriverManager.getConnection("jdbc:sqlite:src/gui/includes/programs.db");
       Statement statement = connection.createStatement();
-      statement.setQueryTimeout(30);  // set timeout to 30 sec.
+      statement.setQueryTimeout(30);  // timeout au bout de 30 secondes.
 
    //   statement.executeUpdate("drop table if exists programs");
    //   statement.executeUpdate("create table programs (id int, name string, type integer, mur1_x float(3), mur1_y float(3))");
@@ -38,8 +38,6 @@ public class Database
     }
     catch(SQLException e)
     {
-      // if the error message is "out of memory", 
-      // it probably means no database file is found
       System.err.println(e.getMessage());
     }
     finally
@@ -51,7 +49,6 @@ public class Database
       }
       catch(SQLException e)
       {
-        // connection close failed.
         System.err.println(e);
       }
     }
