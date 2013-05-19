@@ -2,7 +2,7 @@ package gui.includes;
 
 import gui.MainWindow;
 import gui.includes.Add.*;
-import gui.includes.Favoris.*;
+import gui.includes.Programmes.*;
 import gui.includes.Reglages.*;
 
 import java.awt.BorderLayout;
@@ -31,11 +31,11 @@ public class MenuBar extends JPanel {
 	JButton settingsButton = new JButton("Paramètres", settingsIcon);
 
 	public MenuBar() {
-		this.setSize(700, 300); // Not working ...
+		this.setSize(700, 300); // Not working ... Of course, the layout manager decides what to do
 		this.add(addButton);
 		this.add(favsButton);
 		this.add(settingsButton);
-		this.setBackground(Color.WHITE);
+		this.setBackground(new Color(245, 245, 245));
 		
 		addButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
@@ -55,15 +55,15 @@ public class MenuBar extends JPanel {
 	}
 	
 	public void addButtonPressed() {
-		MainWindow.fenetre.buildWindow(AddStep1.panel);
+		MainWindow.fenetre.buildWindow(new AddStep1());
 	}
 	
 	public void favsButtonPressed() {
-		MainWindow.fenetre.buildWindow(Favoris.panel);
+		MainWindow.fenetre.buildWindow(new Programmes());
 	}
 	
 	public void settingsButtonPressed() {
-		MainWindow.fenetre.buildWindow(Reglages.panel);
+		MainWindow.fenetre.buildWindow(new Reglages());
 	}
 	
 }

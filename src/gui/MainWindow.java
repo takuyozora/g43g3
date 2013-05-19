@@ -2,7 +2,8 @@ package gui;
 
 import gui.includes.Content;
 import gui.includes.MenuBar;
-import gui.includes.Terrain.Terrain;
+import gui.includes.Terrain;
+
 
 import java.awt.BorderLayout;
 import java.awt.Component;

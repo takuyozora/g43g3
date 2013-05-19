@@ -1,7 +1,8 @@
 package gui.includes.Add;
 
 import gui.MainWindow;
-import gui.includes.Terrain.Terrain;
+import gui.includes.FirstPersonCam;
+import gui.includes.Terrain;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,7 @@ import javax.swing.JTextField;
 
 public class AddStep1 extends JPanel {
 	
-	public static AddStep1 panel = new AddStep1();
+//	public static AddStep1 panel = new AddStep1();
 	
 	private JLabel title = new JLabel("Step 1", 10);
 	private JPanel formContainer = new JPanel();
@@ -45,6 +46,7 @@ public class AddStep1 extends JPanel {
 	
 	public void nextPressed() {
 		MainWindow.fenetre.buildWindow(Terrain.terrain);
+	//	MainWindow.fenetre.buildWindow(new FirstPersonCam(Terrain.terrain));
 		Terrain.terrain.requestFocusInWindow();
 	}
 }
