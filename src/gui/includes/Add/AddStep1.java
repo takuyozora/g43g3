@@ -1,7 +1,6 @@
 package gui.includes.Add;
 
 import gui.MainWindow;
-import gui.includes.FirstPersonCam;
 import gui.includes.Terrain;
 
 import java.awt.BorderLayout;
