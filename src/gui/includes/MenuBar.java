@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 
 public class MenuBar extends JPanel {
 	
-	String resPath = "./src/gui/res/"; // Path to resources
+	public static String resPath = "./src/gui/res/"; // Path to resources
 	
 	/* MenuBar buttons definition w/ icon */
 	ImageIcon addIcon = new ImageIcon(resPath+"add.png");
