@@ -11,16 +11,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Content extends JPanel {
+	public Content() {
+	}
 	
 	public void paintComponent(Graphics g){                        
 
 	    // j'ai créer les textes, ce qui est police etc .. jusqu'à la fin
-		g.drawString("Bienvenu dans l'application SquashPro ", 230, 30);  
+		g.drawString("Bienvenue dans l'application SquashPro ", 230, 30);  
 
 	    // J'ai crée les textes 
-		g.drawString("New : créer une nouvelle simulation ", 150, 100);  
-	    g.drawString("Favoris : Utiliser les données déjà enregistrées ", 150, 220);
-	    g.drawString("Settings : aller dans les paramètres", 150, 340);
+		g.drawString("Nouveau : Créer une nouvelle simulation", 150, 100);  
+	    g.drawString("Favoris : Accéder aux simulations existants", 150, 220);
+	    g.drawString("Paramètres : Pour régler la position du lanceur", 150, 340);
 	    this.setBackground(Color.white);
 	    // J'ai crée les images 
 	    try {

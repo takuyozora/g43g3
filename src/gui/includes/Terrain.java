@@ -39,6 +39,12 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
    private int mouseInitPosX = 0;
    private int mouseInitPosY = 0;
    
+   // Mouvement de la balle
+   private double ballMotionX = 1;
+   private double ballMotionY = 1;
+   private double ballMotionZ = 1;
+   int posInTableau = 0;
+   
    // Paramètres pour tourner le terrain en mode automatique (Test uniquement)
    private float angleCube = 0;
    private float speedCube = -1.5f;
@@ -102,11 +108,11 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
       gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       gl.glLoadIdentity();
  
-      gl.glTranslated(0, -2.82, -9); // Placement au centre du terrain
+      gl.glTranslated(0, -2.82, -12); // Placement au centre du terrain
       gl.glRotated(rotation_x,1,0,0);
       gl.glRotated(rotation_y,0,1,0);
       
-      gl.glTranslated(-3.2, 0, -7.875);  // -7,875
+      gl.glTranslated(-3.2, 0, -5.2);  // -7,875
       
       // Rotation de la caméra
    //   gl.glRotated(rotation_x,1,0,0);
@@ -194,7 +200,20 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
       
       gl.glEnd();
       
-      gl.glTranslated(1, 1, 1);
+      ballMotionX = tabX()[posInTableau];
+      if(posInTableau < tabX().length-1) {
+    	  posInTableau++;
+      }
+      else {
+    	  ballMotionX = tabX()[tabX().length-1];
+      }
+      
+      gl.glTranslated(ballMotionX, ballMotionY, ballMotionZ);
+      
+   //   ballMotionX += 0.01;
+   //   ballMotionY += 0.01;
+      ballMotionZ += 0.02;
+      
       
       // Balle de Squash
       GLUquadric sphere2 = glu.gluNewQuadric();
@@ -241,21 +260,70 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
    }
    
    
+  public double[] tabX() {
+	  double[] tab = new double[200];
+	  
+	  for(int i =0; i<tab.length; i++) {
+		  if(i == 0) {
+			  tab[i] = 1;
+		  }
+		  else {
+			  tab[i] = tab[i-1]+0.01;
+		  }
+		  
+	  }
+
+	  
+	  return tab;
+  }
+  
+  public double[] tabY() {
+	  double[] tab = new double[5];
+	  
+	  tab[0] = 1;
+	  tab[1] = 1.1;
+	  tab[2] = 1.2;
+	  tab[3] = 1.3;
+	  tab[4] = 1.4;
+	  
+	  return tab;
+  }
+  
+  public double[] tabZ() {
+	  double[] tab = new double[5];
+	  
+	  tab[0] = 1;
+	  tab[1] = 1.1;
+	  tab[2] = 1.2;
+	  tab[3] = 1.3;
+	  tab[4] = 1.4;
+	  
+	  return tab;
+  }
    
    
-   
-   
-   public float[][][] TableauPositions() {
+  /* 
+   public float[][][] tableauPositions() {
 	   float[][][] tab = new float[20][20][20];
 	   float x =  5;
 	   
-	   for(int i=0; i<20; i++) {
+	   tab[0][0][0] = 5;
+	   
+	   for(int i=0; i<19; i++) {
+		   for(int j=0; j<19; j++) {
+			   for(int k=0; k<19; k++) {
+				   tab[i][i][i] = x;
+				   tab[i][i][i] = x;
+				   x=x-0.3f;
+			   }
+		   }
 		   tab[i][i][i] = x;
 		   x=x-0.3f;
-	   }
+	   } 
 	   
 	   return tab;
-   }
+   } 
+   */
 
 
 	@Override
@@ -277,7 +345,7 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		System.out.println(rotation_x);
+	//	System.out.println(rotation_x);
 	}
 	
 	

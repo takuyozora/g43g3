@@ -1,7 +1,6 @@
 package gui.includes.Reglages;
 
 import gui.Database;
-import gui.MainWindow;
 import gui.includes.MenuBar;
 
 import javax.imageio.ImageIO;
@@ -9,33 +8,70 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.BorderLayout;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-public class PositionLanceur extends JPanel implements MouseListener {
+public class PositionLanceur extends JPanel implements MouseListener, MouseMotionListener {
 	
 	private int terrainX = 320; // Dimensions du terrain affiché à l'utilisateur
 	private int terrainY = 488;
 	
+	private int width;
+	private int height;
+	
+	private JLabel liveX = new JLabel("x : 0");
+	private JLabel liveY = new JLabel("y : 0");
+	
+	private JLabel labelX = new JLabel("x : 0");
+	private JLabel labelY = new JLabel("y : 0");
+	private JLabel description = new JLabel("Cliquez sur l'endroit o\u00F9 est plac\u00E9 le lanceur");
+	
+	private JPanel topPanel = new JPanel();
+	private JPanel positionPanel = new JPanel();
+	private JPanel positionLivePanel = new JPanel();
+	
 	JLabel lblimage = new JLabel();
+	Database database = new Database();
 	
 	public PositionLanceur() {
-		setLayout(new BorderLayout());
+
+		database.connect();
+		labelX.setText("x : "+database.getPositionLanceur()[0]);
+		labelY.setText("y : "+database.getPositionLanceur()[1]);
+		database.logout();
 		
-		JLabel lblCliquezSurLendroit = new JLabel("Cliquez sur l'endroit o\u00F9 est plac\u00E9 le lanceur");
-		add(lblCliquezSurLendroit, BorderLayout.NORTH);
+		setLayout(new BorderLayout());
+		topPanel.setLayout(new BorderLayout());
+		positionPanel.setLayout(new BorderLayout());
+		positionLivePanel.setLayout(new BorderLayout());
+		
+		
+		topPanel.add(description, BorderLayout.WEST);
+		topPanel.add(positionPanel, BorderLayout.EAST);
+		setBorder( new EmptyBorder(10, 10, 10, 10));
+		
+		positionPanel.add(labelX, BorderLayout.NORTH);
+		positionPanel.add(labelY, BorderLayout.SOUTH);
+		
+		positionLivePanel.add(liveX, BorderLayout.NORTH);
+		positionLivePanel.add(liveY, BorderLayout.SOUTH);
+		
+		
+		add(topPanel, BorderLayout.NORTH);
+		add(positionLivePanel, BorderLayout.SOUTH);
+	//	add(labelX, BorderLayout.WEST);
+	//	add(labelY, BorderLayout.EAST);
 		
 		Image image;
 		try {
@@ -45,6 +81,7 @@ public class PositionLanceur extends JPanel implements MouseListener {
 			lblimage = new JLabel(monImg);
 			this.add(lblimage, BorderLayout.CENTER);
 			lblimage.addMouseListener(this);
+			lblimage.addMouseMotionListener(this);
 			// this.add(lblimage);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -64,26 +101,20 @@ public class PositionLanceur extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		int width = 2*arg0.getX() - (lblimage.getWidth() - terrainX);
-		int height = 2*arg0.getY() - (lblimage.getHeight() - terrainY);
+		width = 2*arg0.getX() - (lblimage.getWidth() - terrainX);
+		height = 2*arg0.getY() - (lblimage.getHeight() - terrainY);
 		// System.out.println(arg0.getX());
 		// System.out.println(MainWindow.fenetre.getWidth());
 		if(width < 0 || width > 640 || height < 0 || height > 975) {
 			System.out.println("Vous n'êtes pas dans le terrain");
 		}
 		else {
-			/* System.out.println(width);
-			System.out.println(height);
-			System.out.println(" "); */
-			try {
-				Database database = new Database();
-				database.connect();
-				database.setPositionLanceur(width, height);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+			database = new Database();
+			database.connect();
+			database.setPositionLanceur(width, height);
+			labelX.setText("x : "+width);
+			labelY.setText("y : "+height);
+			database.logout();
 		}
 	}
 
@@ -109,6 +140,26 @@ public class PositionLanceur extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		width = 2*arg0.getX() - (lblimage.getWidth() - terrainX);
+		height = 2*arg0.getY() - (lblimage.getHeight() - terrainY);
+		
+		if(width < 0 || width > 640 || height < 0 || height > 975) {
+
+		}
+		else {
+			liveX.setText("x : "+width);
+			liveY.setText("y : "+height);
+		}
 	}
 
 }

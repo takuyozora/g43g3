@@ -31,7 +31,7 @@ public class MenuBar extends JPanel {
 	JButton settingsButton = new JButton("Paramètres", settingsIcon);
 
 	public MenuBar() {
-		this.setSize(700, 300); // Not working ... Of course, the layout manager decides what to do
+	//	this.setSize(700, 300); // Not working ... Of course, the layout manager decides what to do
 		this.add(addButton);
 		this.add(favsButton);
 		this.add(settingsButton);
