@@ -86,7 +86,7 @@ public class Balle extends PointMateriel {
 				throw new PasAssezDeRebondError("Pas Assez");
 			}
 		}
-		System.out.println("Nombre de rebond : " + nbrebond);
+//		System.out.println("Nombre de rebond : " + nbrebond);
 		return this.position;
 	}
 	

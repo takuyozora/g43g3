@@ -291,7 +291,7 @@ public class LancerTrois {
 		double[] fourchette = LancerTrois.calculFourchetteTrois(posTireur, murCible);
 		final double theTheta = 1.35 + Math.random()/5 - Math.random()/12 ; // Pour l'instant on fixe theta
 		
-		System.out.println("Theta :"+theTheta);
+//		System.out.println("Theta :"+theTheta);
 		
 		double vitesse = vMax/2;
 
@@ -305,7 +305,7 @@ public class LancerTrois {
 		
 		for(double n=1;n<maxIter;n++){
 			if(DEBUG){
-				System.out.println(err);
+//				System.out.println(err);
 			}
 			vitesseTry.setRayons(vitesse);
 			Balle balle = new Balle(posTireur,vitesseTry);
