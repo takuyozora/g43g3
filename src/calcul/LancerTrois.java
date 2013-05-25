@@ -266,7 +266,7 @@ public class LancerTrois {
 //		return vitesseTry;
 //	}
 	
-	public double[][] lancer(Vecteur posTireur, Vecteur posCible, int murCible){
+	public static double[][] lancer(Vecteur posTireur, Vecteur posCible, int murCible){
 		boolean DEBUG = true;
 		
 		Vecteur bestTry = new Vecteur();
@@ -394,14 +394,14 @@ public class LancerTrois {
 		
 		try {
 			trajectoire = new Balle(posTireur,vitesseTry).getTrajectoire();
-			vitesselanceur = vitesseTry;
+//			vitesselanceur = vitesseTry;
 			return trajectoire;
 		} catch (RebondPlafondError e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
 		
-		vitesselanceur = vitesseTry;
+//		vitesselanceur = vitesseTry;
 		return trajectoire = new double[1][1];
 	
 		
