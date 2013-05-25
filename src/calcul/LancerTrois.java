@@ -1,5 +1,7 @@
 package calcul;
 
+import calcul.Balle.RebondPlafondError;
+
 
 public class LancerTrois {
 	/*
@@ -262,7 +264,7 @@ public class LancerTrois {
 //		return vitesseTry;
 //	}
 	
-	public static Vecteur lancer(Vecteur posTireur, Vecteur posCible, int murCible){
+	public static double[][] lancer(Vecteur posTireur, Vecteur posCible, int murCible){
 		boolean DEBUG = true;
 		
 		Vecteur bestTry = new Vecteur();
@@ -371,7 +373,7 @@ public class LancerTrois {
 				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
 				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
 				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
-				return vitesseTry;
+				break;
 			}else if (n%50 == 0){
 				if(System.currentTimeMillis() - begin > 800){
 					break;
@@ -386,7 +388,16 @@ public class LancerTrois {
 		System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
 		System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
 		System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
-		return bestTry;
+		double[][] trajectoire;
+		try {
+			trajectoire = new Balle(posTireur,vitesseTry).getTrajectoire();
+			return trajectoire;
+		} catch (RebondPlafondError e) {
+			// TODO Bloc catch généré automatiquement
+			e.printStackTrace();
+		}
+		
+		return trajectoire = new double[1][1];
 	
 		
 	}
@@ -466,7 +477,7 @@ public class LancerTrois {
 //		System.out.println(phidegre);
 		
 		long begin = System.currentTimeMillis();
-		Vecteur vitesse = LancerTrois.lancer(posi,posf,murun);
+		double[][] trajectoire = LancerTrois.lancer(posi,posf,murun);
 		long end = System.currentTimeMillis();
 		float time = ((float) (end-begin));
 		
