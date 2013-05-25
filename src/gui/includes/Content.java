@@ -1,43 +1,93 @@
 package gui.includes;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.awt.Font;
 import java.awt.Graphics;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Content extends JPanel {
+	
+	// Attributs
+	private JPanel panbvn = new JPanel();
+	private JPanel pan2 = new JPanel(); 
+	
+	private JPanel pannew = new JPanel(); 
+	private JPanel panfav = new JPanel(); 
+	private JPanel panpar = new JPanel(); 
+	
+	private JLabel textbvn = new JLabel("Bienvenue dans l'application SquashPro ");
+	private JLabel textnew = new JLabel("Nouveau : Créer une nouvelle simulation");
+	private JLabel textfav = new JLabel("Favoris : Accéder aux simulations existants");
+	private JLabel textpar = new JLabel("Paramètres : Régler la position du lanceur");
+	
+	private Image imgnew;
+	private Image imgfav;
+	private Image imgpar;
+	Icon iconnew;
+	Icon iconfav;
+	Icon iconpar;
+	
+	
+	
+	
 	public Content() {
+		try {
+			imgnew =  ImageIO.read(new File("./src/gui/res/add.png"));
+			iconnew = new ImageIcon(imgnew);
+			imgfav =  ImageIO.read(new File("./src/gui/res/favs.png"));
+			iconfav= new ImageIcon(imgfav);
+			imgpar =  ImageIO.read(new File("./src/gui/res/settings.png"));
+			iconpar = new ImageIcon(imgpar);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.setLayout(new BorderLayout());
+		this.add(panbvn,BorderLayout.NORTH);
+		this.add(pan2,BorderLayout.CENTER);
+		
+		JLabel labelnew = new JLabel(iconnew);
+		JLabel labelfav = new JLabel(iconfav);
+		JLabel labelpar = new JLabel(iconpar);
+		
+		panbvn.setLayout(new FlowLayout());
+		panbvn.add(textbvn);
+		panbvn.setPreferredSize(new Dimension(500,100));
+		
+		pannew.setLayout(new FlowLayout());
+		pannew.add(labelnew);
+		pannew.add(textnew);
+		pannew.setPreferredSize(new Dimension(500,100));
+		
+		panfav.setLayout(new FlowLayout());
+		panfav.add(labelfav);
+		panfav.add(textfav);
+		panfav.setPreferredSize(new Dimension(500,100));
+		
+		panpar.setLayout(new FlowLayout());
+		panpar.add(labelpar);
+		panpar.add(textpar);
+		panpar.setPreferredSize(new Dimension(500,270));
+		
+		pan2.setLayout(new BorderLayout());
+		pan2.add(pannew,BorderLayout.NORTH);
+		pan2.add(panfav,BorderLayout.CENTER);
+		pan2.add(panpar,BorderLayout.SOUTH);
+		
 	}
 	
-	public void paintComponent(Graphics g){                        
-
-	    // j'ai créer les textes, ce qui est police etc .. jusqu'à la fin
-		g.drawString("Bienvenue dans l'application SquashPro ", 230, 30);  
-
-	    // J'ai crée les textes 
-		g.drawString("Nouveau : Créer une nouvelle simulation", 150, 100);  
-	    g.drawString("Favoris : Accéder aux simulations existants", 150, 220);
-	    g.drawString("Paramètres : Pour régler la position du lanceur", 150, 340);
-	    this.setBackground(Color.white);
-	    // J'ai crée les images 
-	    try {
-	        Image img = ImageIO.read(new File("./src/gui/res/add.png"));
-	        g.drawImage(img, 110, 80, this);
-	     
-	        Image img2 = ImageIO.read(new File("./src/gui/res/favs.png"));
-	        g.drawImage(img2, 110, 200, this);
-	        
-	        Image img3 = ImageIO.read(new File("./src/gui/res/settings.png"));
-	        g.drawImage(img3, 110, 320, this);
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }                
-	}                
 }               
 
 	
