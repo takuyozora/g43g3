@@ -91,7 +91,7 @@ public class Balle extends PointMateriel {
 	}
 	
 	public double[][] getTrajectoire() throws RebondPlafondError{
-		double[][] tmp = new double[1000][3];
+		double[][] tmp = new double[500][3];
 		int i = 0;
 		int impact = Espace.PAS_IMPACT; 
 		while(impact != Espace.IMPACT_SOL){
