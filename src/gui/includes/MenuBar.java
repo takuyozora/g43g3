@@ -23,7 +23,7 @@ public class MenuBar extends JPanel {
 	/* MenuBar buttons definition w/ icon */
 	
 	ImageIcon homeIcon = new ImageIcon(resPath+"home.png");
-	JButton homeButton = new JButton("Accueil", homeIcon);
+	JButton homeButton = new JButton("", homeIcon);
 	
 	ImageIcon addIcon = new ImageIcon(resPath+"add.png");
 	JButton addButton = new JButton("Nouveau", addIcon);
@@ -32,7 +32,7 @@ public class MenuBar extends JPanel {
 	JButton favsButton = new JButton("Favoris", favsIcon);
 
 	ImageIcon settingsIcon = new ImageIcon(resPath+"settings.png");
-	JButton settingsButton = new JButton("Param√®tres", settingsIcon);
+	JButton settingsButton = new JButton("Paramètres", settingsIcon);
 
 	public MenuBar() {
 	//	this.setSize(700, 300); // Not working ... Of course, the layout manager decides what to do

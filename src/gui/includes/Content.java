@@ -26,9 +26,13 @@ public class Content extends JPanel {
 	private JPanel panpar = new JPanel(); 
 	
 	private JLabel textbvn = new JLabel("Bienvenue dans l'application SquashPro ");
-	private JLabel textnew = new JLabel("Nouveau : Créer une nouvelle simulation");
-	private JLabel textfav = new JLabel("Favoris : Accéder aux simulations existantes");
-	private JLabel textpar = new JLabel("Paramètres : Régler la position du lanceur");
+	private JLabel textnew = new JLabel( "Créer une nouvelle simulation");
+	private JLabel textfav = new JLabel("Accéder aux simulations existantes");
+	private JLabel textpar = new JLabel("Régler la position du lanceur");
+	private JLabel textnewgras = new JLabel("Nouveau :");
+	private JLabel textfavgras = new JLabel("Favoris :");
+	private JLabel textpargras = new JLabel("Paramètres :");
+	
 	
 	private Image imgnew;
 	private Image imgfav;
@@ -62,22 +66,29 @@ public class Content extends JPanel {
 		JLabel labelfav = new JLabel(iconfav);
 		JLabel labelpar = new JLabel(iconpar);
 		
+		textnewgras.setFont(textnewgras.getFont().deriveFont(Font.BOLD));
+		textfavgras.setFont(textfavgras.getFont().deriveFont(Font.BOLD));
+		textpargras.setFont(textpargras.getFont().deriveFont(Font.BOLD));
+		
 		panbvn.setLayout(new FlowLayout());
 		panbvn.add(textbvn);
 		panbvn.setPreferredSize(new Dimension(500,100));
 		
 		pannew.setLayout(new FlowLayout());
 		pannew.add(labelnew);
+		pannew.add(textnewgras);
 		pannew.add(textnew);
 		pannew.setPreferredSize(new Dimension(500,100));
 		
 		panfav.setLayout(new FlowLayout());
 		panfav.add(labelfav);
+		panfav.add(textfavgras);
 		panfav.add(textfav);
 		panfav.setPreferredSize(new Dimension(500,100));
 		
 		panpar.setLayout(new FlowLayout());
 		panpar.add(labelpar);
+		panpar.add(textpargras);
 		panpar.add(textpar);
 		panpar.setPreferredSize(new Dimension(500,270));
 		
