@@ -371,10 +371,10 @@ public class LancerTrois {
 			}
 			
 			if(err < 0.06){
-//				System.out.println("Touvé !! en "+n+" iterations !");
-//				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
-//				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
-//				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
+				System.out.println("Touvé !! en "+n+" iterations !");
+				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
+				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
+				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
 				break;
 			}else if (n%50 == 0){
 				if(System.currentTimeMillis() - begin > 800){
@@ -472,9 +472,9 @@ public class LancerTrois {
 //	}
 	
 //	public static void main(String[] args){
-//		Vecteur posf = new Vecteur(2, 9, 0);
-//		Vecteur posi = new Vecteur(6, 0 , 1.5);
-//		int murun = LancerTrois.MUR_SUD;
+//		Vecteur posf = new Vecteur(1 ,8.5 , 0);
+//		Vecteur posi = new Vecteur(5 , 3 , 1.5);
+//		int murun = LancerTrois.MUR_OUEST;
 //		LancerTrois lancer = new LancerTrois(posi, murun, posf);
 //		
 ////		double phi = lancer.calculPhiTirTrois();
@@ -487,6 +487,8 @@ public class LancerTrois {
 //		float time = ((float) (end-begin));
 //		
 //		System.out.println("Temps d'exec :"+time);
-//		
+//		for (int i=0 ; i<trajectoire.length ; i++){
+//		System.out.println(trajectoire[i][2]);
+//		}
 //	}
 }
