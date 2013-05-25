@@ -90,6 +90,30 @@ public class Balle extends PointMateriel {
 		return this.position;
 	}
 	
+	public double[][] getTrajectoire() throws RebondPlafondError{
+		double[][] tmp = new double[500][3];
+		int i = 0;
+		int impact = Espace.PAS_IMPACT; 
+		while(impact != Espace.IMPACT_SOL){
+			tmp[i][0] = this.position.x;
+			tmp[i][1] = this.position.y;
+			tmp[i][2] = this.position.z;
+			i++;
+			if(impact != Espace.PAS_IMPACT){
+				this.rebond(impact);
+			}
+			this.subirForce(Vecteur.pscalaire(Espace.GRAVITE, this.masse), this.getDeltaT());
+			this.subirForce(Vecteur.pscalaire(this.vitesse,-COEFFICIENT_FROTTEMENT), this.getDeltaT());
+			this.continuerMouvement(this.getDeltaT());
+			impact = Espace.impact(this.position);
+		}
+		double[][] trajectoire = new double[i][3];
+		for(int j=0; j<i; j++){
+			trajectoire[j] = tmp[j];
+		}
+		return trajectoire;
+	}
+	
 	public void rebond(int impact) throws RebondPlafondError{
 		/*
 		 * Gère les rebonds

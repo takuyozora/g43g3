@@ -21,6 +21,10 @@ public class MenuBar extends JPanel {
 	public static String resPath = "./src/gui/res/"; // Path to resources
 	
 	/* MenuBar buttons definition w/ icon */
+	
+	ImageIcon homeIcon = new ImageIcon(resPath+"home.png");
+	JButton homeButton = new JButton("Accueil", homeIcon);
+	
 	ImageIcon addIcon = new ImageIcon(resPath+"add.png");
 	JButton addButton = new JButton("Nouveau", addIcon);
 	
@@ -28,15 +32,22 @@ public class MenuBar extends JPanel {
 	JButton favsButton = new JButton("Favoris", favsIcon);
 
 	ImageIcon settingsIcon = new ImageIcon(resPath+"settings.png");
-	JButton settingsButton = new JButton("Paramètres", settingsIcon);
+	JButton settingsButton = new JButton("Param√®tres", settingsIcon);
 
 	public MenuBar() {
 	//	this.setSize(700, 300); // Not working ... Of course, the layout manager decides what to do
+		this.add(homeButton);
 		this.add(addButton);
 		this.add(favsButton);
 		this.add(settingsButton);
 		this.setBackground(new Color(245, 245, 245));
 		
+		
+		homeButton.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				homeButtonPressed();
+			} 
+		});
 		addButton.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 				addButtonPressed();
@@ -64,6 +75,9 @@ public class MenuBar extends JPanel {
 	
 	public void settingsButtonPressed() {
 		MainWindow.fenetre.buildWindow(new Reglages());
+	}
+	public void homeButtonPressed() {
+		MainWindow.fenetre.buildWindow(new Content());
 	}
 	
 }
