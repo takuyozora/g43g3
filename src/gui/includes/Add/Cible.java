@@ -1,4 +1,4 @@
-package gui.includes.Reglages;
+package gui.includes.Add;
 
 import gui.Database;
 import gui.includes.MenuBar;
@@ -6,15 +6,19 @@ import gui.includes.MenuBar;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -22,7 +26,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class PositionLanceur extends JPanel implements MouseListener, MouseMotionListener {
+public class Cible extends JFrame implements MouseListener, MouseMotionListener {
 	
 	private int terrainX = 320; // Dimensions du terrain affiché à l'utilisateur
 	private int terrainY = 488;
@@ -35,41 +39,64 @@ public class PositionLanceur extends JPanel implements MouseListener, MouseMotio
 	
 	private JLabel labelX = new JLabel("x : 0");
 	private JLabel labelY = new JLabel("y : 0");
-	private JLabel description = new JLabel("Cliquez sur l'endroit o\u00F9 est plac\u00E9 le lanceur");
+	private JLabel description = new JLabel("Cliquez sur l'endroit o\u00F9 vous voulez voir la balle retomber");
 	
 	private JPanel topPanel = new JPanel();
 	private JPanel positionPanel = new JPanel();
 	private JPanel positionLivePanel = new JPanel();
+	private JPanel bottomContainer = new JPanel();
+	
+	private JPanel container = new JPanel();
+	private JButton nextBtn = new JButton("Suivant");
 	
 	JLabel lblimage = new JLabel();
 	Database database = new Database();
 	
-	public PositionLanceur() {
-
-		database.connect();
-		labelX.setText("x : "+database.getPositionLanceur()[0]);
-		labelY.setText("y : "+database.getPositionLanceur()[1]);
-		database.logout();
+	public Cible() {
 		
-		setLayout(new BorderLayout());
+		super("Sélectionner une cible");
+		this.setSize(700,600);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setVisible(true);
+		this.setMinimumSize(new Dimension(700, 600));
+
+		labelX.setText("x : "+AddStep1.getCibleX());
+		labelY.setText("y : "+AddStep1.getCibleY());
+		
+		this.add(container);
+		
+		container.setLayout(new BorderLayout());
 		topPanel.setLayout(new BorderLayout());
 		positionPanel.setLayout(new BorderLayout());
 		positionLivePanel.setLayout(new BorderLayout());
+		bottomContainer.setLayout(new BorderLayout());
 		
 		
 		topPanel.add(description, BorderLayout.WEST);
 		topPanel.add(positionPanel, BorderLayout.EAST);
-		setBorder( new EmptyBorder(10, 10, 10, 10));
+		container.setBorder( new EmptyBorder(10, 10, 10, 10));
 		
 		positionPanel.add(labelX, BorderLayout.NORTH);
 		positionPanel.add(labelY, BorderLayout.SOUTH);
+		
+		
 		
 		positionLivePanel.add(liveX, BorderLayout.NORTH);
 		positionLivePanel.add(liveY, BorderLayout.SOUTH);
 		
 		
-		add(topPanel, BorderLayout.NORTH);
-		add(positionLivePanel, BorderLayout.SOUTH);
+		container.add(topPanel, BorderLayout.NORTH);
+		container.add(bottomContainer, BorderLayout.SOUTH);
+		bottomContainer.add(positionLivePanel, BorderLayout.WEST);
+		bottomContainer.add(nextBtn, BorderLayout.EAST);
+		
+		nextBtn.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				dispose();
+				AddStep1.setFocusToSimulate();
+			} 
+		});
 	//	add(labelX, BorderLayout.WEST);
 	//	add(labelY, BorderLayout.EAST);
 		
@@ -79,7 +106,7 @@ public class PositionLanceur extends JPanel implements MouseListener, MouseMotio
 			image = getScaledImage(image, terrainX, terrainY);
 			Icon monImg = new ImageIcon(image);
 			lblimage = new JLabel(monImg);
-			this.add(lblimage, BorderLayout.CENTER);
+			container.add(lblimage, BorderLayout.CENTER);
 			lblimage.addMouseListener(this);
 			lblimage.addMouseMotionListener(this);
 			// this.add(lblimage);
@@ -109,12 +136,12 @@ public class PositionLanceur extends JPanel implements MouseListener, MouseMotio
 			System.out.println("Vous n'êtes pas dans le terrain");
 		}
 		else {
-			database = new Database();
-			database.connect();
-			database.setPositionLanceur(width, height);
+			
+			
 			labelX.setText("x : "+width);
 			labelY.setText("y : "+height);
-			database.logout();
+			AddStep1.setCibleX(width);
+			AddStep1.setCibleY(height);
 		}
 	}
 

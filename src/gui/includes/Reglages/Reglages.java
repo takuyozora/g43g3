@@ -22,7 +22,7 @@ import javax.swing.JLabel;
 
 public class Reglages extends JPanel {
 	
-	private JButton posLanceur = new JButton("Position du lanceur");
+	private JButton posLanceur = new JButton("RŽgler la position du lanceur");
 	public Reglages() {
 		this.add(posLanceur);
 		posLanceur.addActionListener(new ActionListener() { 

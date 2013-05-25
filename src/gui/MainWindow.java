@@ -22,11 +22,11 @@ public class MainWindow extends JFrame {
 	
 	public MainWindow() {
 		super("Squash Pro");
-		this.setSize(700,500);
+		this.setSize(900,650);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.setMinimumSize(new Dimension(500, 500));
+		this.setMinimumSize(new Dimension(900, 650));
 		this.setLayout(layout);
 		// this.setResizable(false);
 		
