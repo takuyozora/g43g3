@@ -59,7 +59,7 @@ public class AddStep1 extends JPanel {
 		formContainer.add(nameContainer, BorderLayout.NORTH);
 		formContainer.add(murContainer, BorderLayout.CENTER);
 		formContainer.add(pointContainer, BorderLayout.SOUTH);
-		formContainer.setPreferredSize(new Dimension(500,330));
+		formContainer.setPreferredSize(new Dimension(500,600));
 		formContainer.setBorder( new EmptyBorder(200, 10, 10, 10));
 		
 		nameContainer.add(progNameDescription);
@@ -69,7 +69,11 @@ public class AddStep1 extends JPanel {
 		murContainer.add(mur_sud);
 		murContainer.add(mur_est);
 		murContainer.add(mur_ouest);
-		pointContainer.add(choixCible);		
+		pointContainer.add(choixCible);	
+		
+		nameContainer.setPreferredSize(new Dimension(500,70));
+		murContainer.setPreferredSize(new Dimension(500,70));
+		pointContainer.setPreferredSize(new Dimension(500,230));
 		
 		nextContainer.add(erreurDeValidation);
 		nextContainer.add(save);
