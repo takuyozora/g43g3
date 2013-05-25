@@ -25,7 +25,7 @@ public class Content extends JPanel {
 	private JPanel panfav = new JPanel(); 
 	private JPanel panpar = new JPanel(); 
 	
-	private JLabel textbvn = new JLabel("Bienvenue dans l'application SquashPro ");
+	private JLabel textbvn = new JLabel("Bienvenue dans l'application SquashPro !");
 	private JLabel textnew = new JLabel( "Créer une nouvelle simulation");
 	private JLabel textfav = new JLabel("Accéder aux simulations existantes");
 	private JLabel textpar = new JLabel("Régler la position du lanceur");
@@ -69,6 +69,7 @@ public class Content extends JPanel {
 		textnewgras.setFont(textnewgras.getFont().deriveFont(Font.BOLD));
 		textfavgras.setFont(textfavgras.getFont().deriveFont(Font.BOLD));
 		textpargras.setFont(textpargras.getFont().deriveFont(Font.BOLD));
+		textbvn.setFont(textbvn.getFont().deriveFont(Font.ITALIC));
 		
 		panbvn.setLayout(new FlowLayout());
 		panbvn.add(textbvn);
