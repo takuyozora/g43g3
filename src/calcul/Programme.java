@@ -4,7 +4,7 @@ import communication.Client;
 
 public class Programme extends Thread  {
 	
-	double[][] parametres;
+	double[][] parametres; 
 	int tempo; // en ms
 	Client client = new Client();
 	
