@@ -38,7 +38,6 @@ public class LancerUn {
 				phi = Vecteur.fractionPi(1, 1);
 			}
 		}
-		
 		else if (murUnCible == LancerUn.MUR_EST) {
 			if (posCible.y > posTireur.y){
 				phi = Math.atan((2*Espace.PROFONDEUR - posCible.y - posTireur.y)/(2*Espace.LARGEUR - posTireur.x - posCible.x));
@@ -50,7 +49,6 @@ public class LancerUn {
 				phi = 0;
 			}
 		}	
-		
 		else if (murUnCible == LancerUn.MUR_SUD){
 			if (posCible.x > posTireur.x){
 				phi = Vecteur.fractionPi(3, 2) + Math.atan((2*Espace.LARGEUR - posTireur.x - posCible.x)/(posTireur.y + posCible.y));
@@ -73,7 +71,6 @@ public class LancerUn {
 				phi = Vecteur.fractionPi(1, 2);
 			}
 		}
-		
 		else{
 			throw new IllegalArgumentException("On ne définit pas correctement le murUnCible voulu");
 		}
@@ -259,10 +256,10 @@ public class LancerUn {
 		Vecteur bestTry = new Vecteur();
 		Vecteur vitesseTry = new Vecteur();
 		
-		Vecteur vitesseLancer = new Vecteur();  // N'est pas utiliser, à supprimer
+		Vecteur vitesseLancer = new Vecteur();  // N'est pas utilisée, à supprimer
 		double thePhi = LancerUn.calculPhiTirUn(posTireur, posCible, murCible);
 		
-		double errMin = 100; // Pour etre sur que la première valeur ne soit pas interprété
+		double errMin = 100; // Pour être sûr que la première valeur ne soit pas interprétée
 		double errLast = 0;
 		double err = 0;
 		
@@ -272,11 +269,11 @@ public class LancerUn {
 		boolean slow = true;
 		
 		final double vMax = 50;
-		final int maxIter = 20000;
+		final int maxIter = 10000;
 		final double k0 = 2*vMax/maxIter; // k0 pour la suite de kn (le pas)
 		
 		double[] fourchette = LancerUn.calculFourchetteUn(posTireur, murCible);
-		final double theTheta = 1.35 + Math.random()/5 - Math.random()/12 ; // Pour l'instant on fixe theta
+		final double theTheta = 1.25 + Math.random()/5 - Math.random()/12 ; // Pour l'instant on fixe theta
 		
 		System.out.println("Theta :"+theTheta);
 		
@@ -298,21 +295,21 @@ public class LancerUn {
 			}catch(Balle.TropDeRebondError e){
 //				System.out.println(e);
 				modif = k0 *exceptLoop;
-				if(slow){
+//				if(slow){
 					vitesse -= modif;
-				}else{
-					vitesse += modif;
-				}
+//				}else{
+//					vitesse += modif;
+//				}
 				exceptLoop += 1;
 				continue;
 			}catch(Balle.PasAssezDeRebondError e){
 //				System.out.println(e);
 				modif = k0*exceptLoop;
-				if(slow){
-					vitesse -= modif;
-				}else{
+//				if(slow){
+//					vitesse -= modif;
+//				}else{
 					vitesse += modif;
-				}
+//				}
 				exceptLoop += 1;
 				continue;
 			}catch(Balle.RebondPlafondError e){
@@ -336,7 +333,7 @@ public class LancerUn {
 				bestTry = new Vecteur(vitesseTry);
 				errMin = Math.min(err,errMin);
 			}			
-			if(err-errLast < 0){ // On s'améliore continuons !
+			if(err-errLast < 0){ // On s'améliore, continuons !
 				modif = (double)(k0 * aLaSuite * aLaSuite) * (double)(maxIter/(maxIter+(n*n))) ;
 				if (slow){
 					modif *= -1;
@@ -353,7 +350,7 @@ public class LancerUn {
 				vitesse -= modif;
 			}
 			
-			if(err < 2){
+			if(err < 0.50){
 				System.out.println("Touvé !! en "+n+" iterations !");
 				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
 				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
@@ -390,8 +387,8 @@ public class LancerUn {
 //	}
 	
 	public static void main(String[] args){
-		Vecteur posf = new Vecteur(4, 9, 0);
-		Vecteur posi = new Vecteur(6, 3 , 1.5);
+		Vecteur posf = new Vecteur(3, 2, 0);
+		Vecteur posi = new Vecteur(1, 6 , 1.5);
 		int murun = LancerUn.MUR_EST;
 		LancerUn lancer = new LancerUn(posi, murun, posf);
 		

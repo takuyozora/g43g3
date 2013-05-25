@@ -26,6 +26,8 @@ public class LancerTrois {
 		this.cible = cible;
 		
 	}
+	
+	public Vecteur vitesselanceur = new Vecteur ();
 		
 	private static double[] calculFourchetteTrois(Vecteur posinitiale, int murmur){
 		double[]result = {0,0,0,0};
@@ -264,7 +266,7 @@ public class LancerTrois {
 //		return vitesseTry;
 //	}
 	
-	public static double[][] lancer(Vecteur posTireur, Vecteur posCible, int murCible){
+	public double[][] lancer(Vecteur posTireur, Vecteur posCible, int murCible){
 		boolean DEBUG = true;
 		
 		Vecteur bestTry = new Vecteur();
@@ -369,10 +371,10 @@ public class LancerTrois {
 			}
 			
 			if(err < 0.06){
-				System.out.println("Touvé !! en "+n+" iterations !");
-				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
-				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
-				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
+//				System.out.println("Touvé !! en "+n+" iterations !");
+//				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
+//				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
+//				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
 				break;
 			}else if (n%50 == 0){
 				if(System.currentTimeMillis() - begin > 800){
@@ -383,20 +385,23 @@ public class LancerTrois {
 				
 				
 		}
-		System.out.println("Meilleur résultat en "+maxIter+" iterations !");
-		System.out.println(" --> Erreur :"+errMin*100 +" cm");
-		System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
-		System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
-		System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
+//		System.out.println("Meilleur résultat en "+maxIter+" iterations !");
+//		System.out.println(" --> Erreur :"+errMin*100 +" cm");
+//		System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
+//		System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
+//		System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
 		double[][] trajectoire;
+		
 		try {
 			trajectoire = new Balle(posTireur,vitesseTry).getTrajectoire();
+			vitesselanceur = vitesseTry;
 			return trajectoire;
 		} catch (RebondPlafondError e) {
 			// TODO Bloc catch généré automatiquement
 			e.printStackTrace();
 		}
 		
+		vitesselanceur = vitesseTry;
 		return trajectoire = new double[1][1];
 	
 		
@@ -466,22 +471,22 @@ public class LancerTrois {
 //		System.out.println("Vitesse : " + vinit.norme() + " Temps : " +time);
 //	}
 	
-	public static void main(String[] args){
-		Vecteur posf = new Vecteur(2, 9, 0);
-		Vecteur posi = new Vecteur(6, 0 , 1.5);
-		int murun = LancerTrois.MUR_SUD;
-		LancerTrois lancer = new LancerTrois(posi, murun, posf);
-		
-//		double phi = lancer.calculPhiTirTrois();
-//		double phidegre = phi*(180/(Math.PI));
-//		System.out.println(phidegre);
-		
-		long begin = System.currentTimeMillis();
-		double[][] trajectoire = LancerTrois.lancer(posi,posf,murun);
-		long end = System.currentTimeMillis();
-		float time = ((float) (end-begin));
-		
-		System.out.println("Temps d'exec :"+time);
-		
-	}
+//	public static void main(String[] args){
+//		Vecteur posf = new Vecteur(2, 9, 0);
+//		Vecteur posi = new Vecteur(6, 0 , 1.5);
+//		int murun = LancerTrois.MUR_SUD;
+//		LancerTrois lancer = new LancerTrois(posi, murun, posf);
+//		
+////		double phi = lancer.calculPhiTirTrois();
+////		double phidegre = phi*(180/(Math.PI));
+////		System.out.println(phidegre);
+//		
+//		long begin = System.currentTimeMillis();
+//		double[][] trajectoire = LancerTrois.lancer(posi,posf,murun);
+//		long end = System.currentTimeMillis();
+//		float time = ((float) (end-begin));
+//		
+//		System.out.println("Temps d'exec :"+time);
+//		
+//	}
 }

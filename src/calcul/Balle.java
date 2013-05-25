@@ -86,11 +86,12 @@ public class Balle extends PointMateriel {
 				throw new PasAssezDeRebondError("Pas Assez");
 			}
 		}
+		System.out.println("Nombre de rebond : " + nbrebond);
 		return this.position;
 	}
 	
 	public double[][] getTrajectoire() throws RebondPlafondError{
-		double[][] tmp = new double[500][3];
+		double[][] tmp = new double[1000][3];
 		int i = 0;
 		int impact = Espace.PAS_IMPACT; 
 		while(impact != Espace.IMPACT_SOL){
