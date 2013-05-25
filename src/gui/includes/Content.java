@@ -27,7 +27,7 @@ public class Content extends JPanel {
 	
 	private JLabel textbvn = new JLabel("Bienvenue dans l'application SquashPro ");
 	private JLabel textnew = new JLabel("Nouveau : Créer une nouvelle simulation");
-	private JLabel textfav = new JLabel("Favoris : Accéder aux simulations existants");
+	private JLabel textfav = new JLabel("Favoris : Accéder aux simulations existantes");
 	private JLabel textpar = new JLabel("Paramètres : Régler la position du lanceur");
 	
 	private Image imgnew;
