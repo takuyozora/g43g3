@@ -39,9 +39,9 @@ public class AddStep1 extends JPanel {
 	private JLabel erreurDeValidation = new JLabel("", 10);
 	private JButton save = new JButton("Ajouter aux favoris");
 	private static JButton next = new JButton("Simuler la trajectoire");
-	private int mur = 0;
-	private static int cibleX = 0;
-	private static int cibleY = 0;
+	public static int mur = 0;
+	public static int cibleX = 0;
+	public static int cibleY = 0;
 	
 	public AddStep1() {
 		this.setLayout(new BorderLayout());
@@ -130,9 +130,19 @@ public class AddStep1 extends JPanel {
 	}
 	
 	public void nextPressed() {
-		MainWindow.fenetre.buildWindow(Terrain.terrain);
+		// Terrain terrain = new Terrain();
+		if(progName.getText().length() > 2 && mur != 0 && cibleX != 0 && cibleY != 0) {
+			Terrain terrain = new Terrain(cibleX, cibleY, mur);
+			terrain.requestFocusInWindow();
+			MainWindow.fenetre.buildWindow(terrain);
+			terrain.requestFocusInWindow();
+		}
+		else {
+			erreurDeValidation.setText("Veuillez remplir tous les champs");
+		}
+	//	MainWindow.fenetre.buildWindow(terrain);
 	//	MainWindow.fenetre.buildWindow(new FirstPersonCam(Terrain.terrain));
-		Terrain.terrain.requestFocusInWindow();
+		
 	}
 	
 	public void savePressed() {
