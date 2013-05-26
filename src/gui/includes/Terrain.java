@@ -1,5 +1,8 @@
 package gui.includes;
 
+import gui.Database;
+import gui.includes.Add.AddStep1;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -49,27 +52,38 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
    private int mouseInitPosY = 0;
    
    // Mouvement de la balle
-   private double ballMotionX = 1;
-   private double ballMotionY = 1;
-   private double ballMotionZ = 1;
+   private double ballMotionX = 4.8;
+   private double ballMotionY = 1.5;
+   private double ballMotionZ = 7.2;
    int posInTableau = 0;
    
    // Paramètres pour tourner le terrain en mode automatique (Test uniquement)
    private float angleCube = 0;
    private float speedCube = -1.5f;
    
-   public static Terrain terrain = new Terrain();
-   public static FPSAnimator animator = new FPSAnimator(terrain, 60, true);
+ //  public static Terrain terrain = new Terrain();
+  // public static FPSAnimator animator;
    
    private int pos_x = 0;
    private int pos_y = 0;
+   private Database database = new Database();
    
-   public Terrain() {
+   Trajectoire matrajectoire;
+   
+   public Terrain(int cible_X, int cible_Y, int murContact) {
+	   FPSAnimator animator = new FPSAnimator(this, 60, true);
 	   this.addGLEventListener(this);
 	   this.addKeyListener(this);
 	   this.addMouseListener(this);
 	   this.addMouseMotionListener(this);
 	   this.setFocusable(true);
+	   
+	   database.connect();
+	   int lanceurX = database.getPositionLanceur()[0];
+	   int lanceurY = database.getPositionLanceur()[1];
+	   database.logout();
+	   matrajectoire = new Trajectoire(cible_X, cible_Y, lanceurX ,lanceurY, 1.5, murContact);
+	   animator.start();
    }
  
    
@@ -229,19 +243,26 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
       
 
       
-      ballMotionX = tabX()[posInTableau];
-      if(posInTableau < tabX().length-1) {
+     // ballMotionX = tabX()[posInTableau];
+      ballMotionX = matrajectoire.getTabX()[posInTableau];
+      ballMotionY = matrajectoire.getTabY()[posInTableau];
+      ballMotionZ = matrajectoire.getTabZ()[posInTableau];
+      if(posInTableau < matrajectoire.getTabX().length-1) {
     	  posInTableau++;
       }
       else {
-    	  ballMotionX = tabX()[tabX().length-1];
+    	//  ballMotionX = tabX()[tabX().length-1];
+    	  ballMotionX = matrajectoire.getTabX()[matrajectoire.getTabX().length-1];
+    	  ballMotionY = matrajectoire.getTabY()[matrajectoire.getTabY().length-1];
+    	  ballMotionZ = matrajectoire.getTabZ()[matrajectoire.getTabZ().length-1];
+    	  
       }
       
       gl.glTranslated(ballMotionX, ballMotionY, ballMotionZ);
       
    //   ballMotionX += 0.01;
    //   ballMotionY += 0.01;
-      ballMotionZ += 0.02;
+    //  ballMotionZ += 0.02;
       
       
       // Balle de Squash
@@ -290,7 +311,7 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
    
    
   public double[] tabX() {
-	  double[] tab = new double[200];
+	  double[] tab = new double[500];
 	  
 	  for(int i =0; i<tab.length; i++) {
 		  if(i == 0) {
@@ -398,7 +419,7 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
 		
 		mouseInitPosX = e.getX();
 		mouseInitPosY = e.getY();
-		getMousePosition(e.getX(), e.getY());
+	//	getMousePosition(e.getX(), e.getY());
 		// System.out.println("Position initiale : "+mouseInitPosX);
 	}
 	
@@ -410,7 +431,7 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
 		previous_x = previous_x + e.getY() - mouseInitPosY;
 	}
 	
-	
+	/*
 	public double[] getMousePosition(int x, int y){
 
 		
@@ -429,10 +450,10 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
 		winX = (float)x;
 		winY = (float)viewport[3] - (float)y;
 		
-		/*
+		
 	    gl.glGetDoublev( GL2.GL_MODELVIEW_MATRIX, modelview, 0 );
 		gl.glGetDoublev( GL2.GL_PROJECTION_MATRIX, projection, 0 );
-		gl.glGetIntegerv( GL2.GL_VIEWPORT, viewport, 0 ); */
+		gl.glGetIntegerv( GL2.GL_VIEWPORT, viewport, 0 ); 
 		
 		
 
@@ -441,7 +462,7 @@ public class Terrain extends GLJPanel implements GLEventListener, KeyListener, M
 		System.out.println("x: " + wcoord[0] +" y: "+wcoord[1]+" z: "+wcoord[2]+" "+wcoord[3]+" worked? "+test);
 		System.out.println(modelview[0]);
 		return wcoord;
-	}
+	} */
 
 	
 	

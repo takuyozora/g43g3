@@ -38,7 +38,7 @@ public class MainWindow extends JFrame {
 	
 	public static void main(String[] args) {
 		fenetre = new MainWindow();
-		Terrain.animator.start();
+	//	Terrain.animator.start();
 	}
 	
 	public void buildWindow(Component component) {
