@@ -371,10 +371,10 @@ public class LancerTrois {
 			}
 			
 			if(err < 0.06){
-				System.out.println("Touvé !! en "+n+" iterations !");
+		/*		System.out.println("Touvé !! en "+n+" iterations !");
 				System.out.println("Cible:  X:"+posCible.x+" Y:"+posCible.y+" Z:"+posCible.z);
 				System.out.println("Trouvée:  X:"+posTrouvee.x+" Y:"+posTrouvee.y+" Z:"+posTrouvee.z);
-				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h");
+				System.out.println("Vitesse:  Norme:"+vitesseTry.norme()*3.6+" km/h"); */
 				break;
 			}else if (n%50 == 0){
 				if(System.currentTimeMillis() - begin > 800){
